@@ -1,5 +1,6 @@
 package com.mybossseasonfinal.justthejob.MainActivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -13,6 +14,7 @@ import android.view.MenuItem
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerActivityComponent
 import com.mybossseasonfinal.justthejob.DI.Module.ActivityModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
+import com.mybossseasonfinal.justthejob.QRcodeReaderActivity.QRcodeReaderActivity
 import com.mybossseasonfinal.justthejob.R
 import javax.inject.Inject
 
@@ -63,7 +65,10 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_item1 -> Log.d("MainActivity", "1 Selected")
+            R.id.menu_item1 -> {
+                val intent = Intent(this, QRcodeReaderActivity::class.java)
+                startActivity(intent)
+            }
             R.id.menu_item2 -> Log.d("MainActivity", "2 Selected")
             R.id.menu_item3 -> Log.d("MainActivity", "3 Selected")
             R.id.menu_item4 -> Log.d("MainActivity", "4 Selected")
