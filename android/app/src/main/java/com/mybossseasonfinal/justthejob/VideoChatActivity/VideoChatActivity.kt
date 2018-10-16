@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Window
+import android.widget.Button
 import android.widget.Toast
 import com.mybossseasonfinal.justthejob.BuildConfig
 import com.mybossseasonfinal.justthejob.R
@@ -48,6 +49,18 @@ class VideoChatActivity : AppCompatActivity() {
         options.debug = Peer.DebugLevelEnum.ALL_LOGS
         peer = Peer(this, options)
 
+        val buttonMakeCall = findViewById<Button>(R.id.buttonMakeCall)
+        buttonMakeCall.isEnabled = true
+        buttonMakeCall.setOnClickListener {
+            it.isEnabled = false
+            if (!isConnected) {
+//                showPeerIds()
+            } else {
+
+            }
+            it.isEnabled = true
+        }
+
 
         showCurrentPeerId()
 
@@ -57,7 +70,6 @@ class VideoChatActivity : AppCompatActivity() {
                         Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO), 0)
         } else {
-
             // Get a local MediaStream & show it
             startLocalStream()
         }
@@ -93,14 +105,11 @@ class VideoChatActivity : AppCompatActivity() {
             Log.d("Skyway_TEST", "[On/Disconnected]")
         }
 
-
         //エラー時に発火
         peer.on(Peer.PeerEventEnum.ERROR) { currentPeerId ->
             val error = currentPeerId as PeerError
             Log.d("Skyway_TEST", "[On/Error]$error")
         }
-
-
     }
 
     private fun startLocalStream() {
