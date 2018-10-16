@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="@color/colorDrawerHeader"
+    android:theme="@style/ThemeOverlay.AppCompat.Light">
+
+
+    <Button
+        android:id="@+id/button_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="企業変更" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_change"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="52dp"
+        android:padding="16dp"
+        android:text="Hello, Drawer!" />
+</RelativeLayout>
