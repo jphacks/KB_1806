@@ -3,6 +3,10 @@
     package="com.mybossseasonfinal.justthejob">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
         android:name=".JustTheJobApp"
@@ -19,7 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QRcodeReaderActivity.QRcodeReaderActivity"></activity>
+        <activity android:name=".QRcodeReaderActivity.QRcodeReaderActivity" />
+        <activity android:name=".VideoChatActivity.VideoChatActivity"></activity>
     </application>
 
 </manifest>
