@@ -17,14 +17,21 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "SKYWAY_API_KEY", "\"${project.property("skywayApiKey")}\""
+            buildConfigField "String", "SKYWAY_HOST", "\"${project.property("skywayHost")}\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "SKYWAY_API_KEY", "\"${project.property("skywayApiKey")}\""
+            buildConfigField "String", "SKYWAY_HOST", "\"${project.property("skywayHost")}\""
         }
     }
 }
 
 dependencies {
+    implementation(name: 'SkyWay', ext: 'aar')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -60,4 +67,10 @@ dependencies {
 
 
     implementation 'com.android.support:design:27.1.1'
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
 }

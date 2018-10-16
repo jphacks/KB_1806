@@ -16,6 +16,7 @@ import com.mybossseasonfinal.justthejob.DI.Module.ActivityModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
 import com.mybossseasonfinal.justthejob.QRcodeReaderActivity.QRcodeReaderActivity
 import com.mybossseasonfinal.justthejob.R
+import com.mybossseasonfinal.justthejob.VideoChatActivity.VideoChatActivity
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNavigationItemSelectedListener {
@@ -69,7 +70,10 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
                 val intent = Intent(this, QRcodeReaderActivity::class.java)
                 startActivity(intent)
             }
-            R.id.menu_item2 -> Log.d("MainActivity", "2 Selected")
+            R.id.menu_item2 -> {
+                val intent = Intent(this, VideoChatActivity::class.java)
+                startActivity(intent)
+            }
             R.id.menu_item3 -> Log.d("MainActivity", "3 Selected")
             R.id.menu_item4 -> Log.d("MainActivity", "4 Selected")
         }
