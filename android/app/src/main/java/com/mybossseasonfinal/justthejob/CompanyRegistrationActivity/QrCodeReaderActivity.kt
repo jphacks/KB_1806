@@ -4,31 +4,43 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import com.google.zxing.integration.android.IntentIntegrator
-import com.google.zxing.integration.android.IntentResult
+import com.google.zxing.ResultPoint
+import com.journeyapps.barcodescanner.BarcodeCallback
+import com.journeyapps.barcodescanner.BarcodeResult
+import com.journeyapps.barcodescanner.CompoundBarcodeView
 import com.mybossseasonfinal.justthejob.R
 
+
 class QrCodeReaderActivity : AppCompatActivity() {
+
+    private lateinit var mBarcodeView: CompoundBarcodeView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_qrcode_reader)
 
-        val intentIntegrator = IntentIntegrator(this).initiateScan()
+        mBarcodeView = findViewById(R.id.barcodeView)
+        mBarcodeView.decodeSingle(object : BarcodeCallback {
+            override fun barcodeResult(barcodeResult: BarcodeResult) {
+                Log.d("readQR", barcodeResult.text)
+                toCompanyRegistrationView(barcodeResult.text)
+            }
+
+            override fun possibleResultPoints(list: List<ResultPoint>) {}
+        })
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        var intentResult: IntentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        if (intentResult != null) {
-            Log.d("readQR", intentResult.contents)
-            toCompanyInformationView(intentResult.contents)
-
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-        }
+    override fun onResume() {
+        super.onResume()
+        mBarcodeView.resume()
     }
 
-    private fun toCompanyInformationView(companyId: String) {
+    override fun onPause() {
+        super.onPause()
+        mBarcodeView.pause()
+    }
+
+    private fun toCompanyRegistrationView(companyId: String) {
         val intent = Intent(this, CompanyRegistrationActivity::class.java)
         intent.putExtra("COMPANY_ID", companyId)
         startActivity(intent)
