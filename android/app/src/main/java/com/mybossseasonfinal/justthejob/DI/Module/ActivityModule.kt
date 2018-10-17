@@ -1,6 +1,6 @@
 package com.mybossseasonfinal.justthejob.DI.Module
 
-import com.mybossseasonfinal.justthejob.MainActivity.CompanyRegistrationContract
+import com.mybossseasonfinal.justthejob.CompanyRegistrationActivity.CompanyRegistrationContract
 import com.mybossseasonfinal.justthejob.MainActivity.MainContract
 import com.mybossseasonfinal.justthejob.PerActivity
 import dagger.Module
@@ -15,14 +15,14 @@ class ActivityModule {
         this.mainView = mainView
     }
 
-    constructor(companyRegistrationView: CompanyRegistrationContract.View) {
-        this.companyRegistrationView = companyRegistrationView
-    }
-
     @PerActivity
     @Provides
     fun provideMainContractView(): MainContract.View {
         return mainView
+    }
+
+    constructor(companyRegistrationView: CompanyRegistrationContract.View) {
+        this.companyRegistrationView = companyRegistrationView
     }
 
     @PerActivity

@@ -1,7 +1,6 @@
 package com.mybossseasonfinal.justthejob.CompanyRegistrationActivity
 
 import android.util.Log
-import com.mybossseasonfinal.justthejob.MainActivity.CompanyRegistrationContract
 import com.mybossseasonfinal.justthejob.Models.Company
 import com.mybossseasonfinal.justthejob.Services.ApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,7 +22,6 @@ class CompanyRegistrationPresenter @Inject constructor(private var apiService: A
                     override fun onError(e: Throwable) {
                         Log.e("getCompany()", "{$e.message}")
                     }
-
                 })
     }
 
