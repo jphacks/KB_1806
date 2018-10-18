@@ -3,35 +3,11 @@ var router = express.Router();
 var MongoClient = require("mongodb").MongoClient;
 var assert = require('assert')
 var url_db = 'mongodb://localhost:27017/company'
-/**
-  * @swagger
-  * definitions:
-  *   LoginCompany:
-  *     type: object
-  *     description: 会社情報
-  *     required:
-  *       - name
-  *       - password
-  *     properties:
-  *       name:
-  *         type: string
-  *         description: 会社名
-  *       password:
-  *         type: string
-  *         format: password
-  *         description: パスワード
-  */
 
 /**
   * @swagger
-  * parameter:
-  *   companyIdPathParam:
-  *     in: path
-  *     name: id
-  *     description: 企業ID
-  *     required: true
-  *     type: integer
-  *     format: int32
+  * schemes:
+  *   - http
   */
 /**
   * @swagger
@@ -42,22 +18,50 @@ var url_db = 'mongodb://localhost:27017/company'
   *     summary: 企業情報取得
   *     description: 指定された企業の情報を取得する。
   *     parameters:
-  *       - $ref: '#/parameters/companyIdPathParam'
+  *       -  name: "id"
+  *          in: "path"
+  *          description: 取得したい企業のID
+  *          required: true
+  *          type: integer
+  *          format: int32
   *     responses:
   *       200:
-  *         description: 取得成功
+  *         description: 成功時のレスポンス
   *         schema:
-  *           allOf:
-  *             - $ref: '#/definitions/LoginCompany'
-  *             - properties:
-  *                 id:
-  *                   type: integer
-  *                   description: 企業ID
+  *           type: object
+  *           description: 会社情報
+  *           properties:
+  *             _id:
+  *               type: integer
+  *               example: 5bc8100cc57a3f116ce0e157
+  *               description: DB登録時のID
+  *             id:
+  *               type: integer
+  *               format: int32
+  *               example: 1
+  *               description: 企業ID
+  *             name:
+  *               type: string
+  *               example: 同志社大学
+  *               description: 企業名
+  *             founder:
+  *               type: string
+  *               example: 新島襄
+  *               description: 創設者
+  *             founding:
+  *               type: string
+  *               example: s23/03/25
+  *               description: 創立年月日
+  *             address:
+  *               type: string
+  *               example: 京都府京都市上京区今出川通烏丸東入玄武町６０１
+  *               description: 住所
   *       404:
-  *         description: 該当データ無し
+  *         description: 失敗時のレスポンス
   *         schema:
   *           type: string
   */
+
 router.get('/:id', function(req, res, next) {
     //res.send("id:" + req.params.id);
     getCompanyInfo(req.params.id, res);
