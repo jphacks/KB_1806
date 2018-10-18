@@ -1,6 +1,7 @@
 package com.mybossseasonfinal.justthejob.DI.Module
 
 import com.mybossseasonfinal.justthejob.Services.ApiService
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -20,11 +21,14 @@ class ApiModule {
     @Singleton
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+        val moshi: Moshi = Moshi.Builder().build()
+
         return Retrofit.Builder()
 //                .baseUrl("http://119.228.76.176:62455/api/") // ここのURLは立てるサーバURL
-                .baseUrl("https://radiant-reaches-45097.herokuapp.com/") // ここのURLは立てるサーバURL
+//                .baseUrl("https://radiant-reaches-45097.herokuapp.com/") // ここのURLは立てるサーバURL
+                .baseUrl("http://192.168.1.105:3000/") // ここのURLは立てるサーバURL
                 .client(okHttpClient)
-                .addConverterFactory(MoshiConverterFactory.create())
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
     }
