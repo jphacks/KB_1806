@@ -15,6 +15,7 @@ import com.mybossseasonfinal.justthejob.CompanyRegistrationActivity.QrCodeReader
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerActivityComponent
 import com.mybossseasonfinal.justthejob.DI.Module.ActivityModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
+import com.mybossseasonfinal.justthejob.MainActivity.NavigationDrawerFragment.NavigationDrawerFragment
 import com.mybossseasonfinal.justthejob.R
 import com.mybossseasonfinal.justthejob.VideoChatActivity.VideoChatActivity
 import javax.inject.Inject
@@ -49,6 +50,15 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
         val navigationView = findViewById<NavigationView>(R.id.navigationView)
         navigationView.setNavigationItemSelectedListener(this)
 
+        //NavigationDrawerFragment
+        if (savedInstanceState == null) {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.addToBackStack(null)
+            var count = 0
+            transaction.replace(R.id.navigationDrawerFragmentContainer, NavigationDrawerFragment.createInstance(count))
+            transaction.commit()
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -58,7 +68,14 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
+            R.id.action_calendar -> Log.d("MainActivity", "Settings Selected!")
+            R.id.action_acceptance_company -> Log.d("MainActivity", "Settings Selected!")
+            R.id.action_read_qr -> {
+                val intent = Intent(this, QrCodeReaderActivity::class.java)
+                startActivity(intent)
+            }
             R.id.action_settings -> Log.d("MainActivity", "Settings Selected!")
+            R.id.action_logout -> Log.d("MainActivity", "Settings Selected!")
         }
         return true
     }
