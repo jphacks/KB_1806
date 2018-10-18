@@ -9,11 +9,14 @@
     <TextView
         android:id="@+id/companyIdTextView"
         android:layout_width="91dp"
-        android:layout_height="61dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="82dp"
+        android:layout_marginEnd="236dp"
+        android:layout_marginBottom="1dp"
         android:text="Company ID"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/companyNameTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
@@ -30,4 +33,33 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp" />
+
+    <TextView
+        android:id="@+id/companyNameTextView"
+        android:layout_width="103dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="219dp"
+        android:layout_marginBottom="8dp"
+        android:text="Company Name"
+        app:layout_constraintBottom_toTopOf="@+id/companyAddressTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/companyIdTextView" />
+
+    <TextView
+        android:id="@+id/companyAddressTextView"
+        android:layout_width="103dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="225dp"
+        android:layout_marginBottom="310dp"
+        android:text="Company Address"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/companyNameTextView" />
+
 </android.support.constraint.ConstraintLayout>

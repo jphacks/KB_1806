@@ -1,11 +1,10 @@
 package com.mybossseasonfinal.justthejob.Models
 
 data class Company(
+        val _id: String,
         val id: Int,
         val name: String,
-        val category: String,
-        val average_salary: Int,
-        val message: String,
-        val createdAt: String,
-        val updatedAt: String
+        val founder: String,
+        val founding: String,
+        val address: String
 )

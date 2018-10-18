@@ -11,16 +11,19 @@ import javax.inject.Inject
 class CompanyRegistrationPresenter @Inject constructor(private var apiService: ApiService, private var view: CompanyRegistrationContract.View) : CompanyRegistrationContract.Presenter {
 
     override fun getCompany(companyId: Int) {
-        apiService.getCompany()
+        apiService.getCompany(companyId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : DisposableSingleObserver<Company>() {
                     override fun onSuccess(company: Company) {
-                        Log.d("getCompany()", "${companyId}")
+                        Log.d("getCompany()", "${company}")
+                        view.showCompanyId(company.id)
+                        view.showCompanyName(company.name)
+                        view.showCompanyAddress(company.address)
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.e("getCompany()", "{$e.message}")
+                        Log.e("getCompany() Error", "{$e.message}")
                     }
                 })
     }
