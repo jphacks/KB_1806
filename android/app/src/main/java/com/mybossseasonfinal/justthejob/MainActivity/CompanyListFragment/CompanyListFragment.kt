@@ -2,16 +2,21 @@ package com.mybossseasonfinal.justthejob.MainActivity.CompanyListFragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerFragmentComponent
 import com.mybossseasonfinal.justthejob.DI.Module.FragmentModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
 import com.mybossseasonfinal.justthejob.MainActivity.NavigationDrawerFragment.NavigationDrawerFragment
+import com.mybossseasonfinal.justthejob.Models.Company
 import com.mybossseasonfinal.justthejob.R
+import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +32,14 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class CompanyListFragment : Fragment(), CompanyListFragmentContract.View {
+class CompanyListFragment : Fragment(),
+        CompanyListFragmentContract.View,
+        CompanyListAdapter.ViewHolder.ItemClickListener {
+
+
+    @Inject
+    lateinit var companyListFragmentPresenter: CompanyListFragmentPresenter
+    lateinit var matchingCompanyList: MutableList<Company>
     private var cnt = 0
 
 
@@ -62,6 +74,13 @@ class CompanyListFragment : Fragment(), CompanyListFragmentContract.View {
         super.onViewCreated(view, savedInstanceState)
         val args = arguments
 
+        //マッチング済み会社リストの設定
+        matchingCompanyList = companyListFragmentPresenter.getMatchingCompanyList()
+        val companyListRecyclerView = view.findViewById<RecyclerView>(R.id.matching_company_list)
+        companyListRecyclerView.adapter = CompanyListAdapter(activity, matchingCompanyList, this)
+        companyListRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        var layoutManager = companyListRecyclerView.layoutManager as LinearLayoutManager
+
         if (args != null) {
             val count = args.getInt("Counter")
             val str = "CompanyListFragment$count"
@@ -92,5 +111,9 @@ class CompanyListFragment : Fragment(), CompanyListFragmentContract.View {
                 fragmentManager.popBackStack()
             }
         }
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        Toast.makeText(activity, "${matchingCompanyList[position].name} がタップされた", Toast.LENGTH_LONG).show()
     }
 }
