@@ -49,34 +49,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include
-                android:id="@+id/entry_sheet"
-                layout="@layout/navigation_drawer_contents_item" />
 
-            <include
-                android:id="@+id/web_test"
-                layout="@layout/navigation_drawer_contents_item" />
-
-            <include
-                android:id="@+id/employee_illustration"
-                layout="@layout/navigation_drawer_contents_item" />
-
-            <include
-                android:id="@+id/terminology_illustration"
-                layout="@layout/navigation_drawer_contents_item" />
-
-            <include
-                android:id="@+id/interview_registration"
-                layout="@layout/navigation_drawer_contents_item" />
-
-            <include
-                android:id="@+id/web_interview"
-                layout="@layout/navigation_drawer_contents_item" />
-
-            <include
-                android:id="@+id/comunity"
-                layout="@layout/navigation_drawer_contents_item" />
-
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/contents_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/comunity_list"
