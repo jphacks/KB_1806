@@ -12,9 +12,7 @@ import javax.inject.Inject
 
 class CompanyRegistrationActivity : AppCompatActivity(), CompanyRegistrationContract.View {
 
-    private lateinit var companyIdView: TextView
     private lateinit var companyNameView: TextView
-    private lateinit var companyAddressView: TextView
 
     @Inject
     lateinit var companyRegistrationPresenter: CompanyRegistrationPresenter
@@ -29,24 +27,14 @@ class CompanyRegistrationActivity : AppCompatActivity(), CompanyRegistrationCont
                 .build()
                 .inject(this)
 
-        companyIdView = findViewById(R.id.companyIdTextView)
         companyNameView = findViewById(R.id.companyNameTextView)
-        companyAddressView = findViewById(R.id.companyAddressTextView)
 
         var companyId: Int = Integer.parseInt(intent.getStringExtra("COMPANY_ID"))
         companyRegistrationPresenter.getCompany(companyId)
     }
 
-    override fun showCompanyId(companyId: Int) {
-        companyIdView.text = "企業ID：${companyId}"
-    }
-
     override fun showCompanyName(companyName: String) {
         companyNameView.text = "企業名：${companyName}"
-    }
-
-    override fun showCompanyAddress(companyAddress: String) {
-        companyAddressView.text = "企業住所：${companyAddress}"
     }
 
 }

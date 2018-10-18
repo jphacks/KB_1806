@@ -17,9 +17,7 @@ class CompanyRegistrationPresenter @Inject constructor(private var apiService: A
                 .subscribe(object : DisposableSingleObserver<Company>() {
                     override fun onSuccess(company: Company) {
                         Log.d("getCompany()", "${company}")
-                        view.showCompanyId(company.id)
                         view.showCompanyName(company.name)
-                        view.showCompanyAddress(company.address)
                     }
 
                     override fun onError(e: Throwable) {
