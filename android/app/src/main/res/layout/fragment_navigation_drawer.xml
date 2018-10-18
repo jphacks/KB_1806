@@ -39,21 +39,62 @@
             android:text="button01" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/user_contents_container"
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textview_01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#00f"
-        android:textSize="30sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/pop_01"
-        android:layout_width="178dp"
-        android:layout_height="wrap_content"
-        android:text="pop01" />
+            <include
+                android:id="@+id/entry_sheet"
+                layout="@layout/navigation_drawer_contents_item" />
+
+            <include
+                android:id="@+id/web_test"
+                layout="@layout/navigation_drawer_contents_item" />
+
+            <include
+                android:id="@+id/employee_illustration"
+                layout="@layout/navigation_drawer_contents_item" />
+
+            <include
+                android:id="@+id/terminology_illustration"
+                layout="@layout/navigation_drawer_contents_item" />
+
+            <include
+                android:id="@+id/interview_registration"
+                layout="@layout/navigation_drawer_contents_item" />
+
+            <include
+                android:id="@+id/web_interview"
+                layout="@layout/navigation_drawer_contents_item" />
+
+            <include
+                android:id="@+id/comunity"
+                layout="@layout/navigation_drawer_contents_item" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/comunity_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/textview_01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#00f"
+                android:textSize="30sp" />
+
+            <Button
+                android:id="@+id/pop_01"
+                android:layout_width="178dp"
+                android:layout_height="wrap_content"
+                android:text="pop01" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

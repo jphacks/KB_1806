@@ -71,8 +71,24 @@ class NavigationDrawerFragment : Fragment(), NavigationDrawerFragmentContract.Vi
             val str = "NavigationDrawerFragment$count"
             cnt = count + 1
 
+            val textViewEntrySheet = view.findViewById<View>(R.id.entry_sheet).findViewById<TextView>(R.id.textView_content_name)
+            val textViewWebTest = view.findViewById<View>(R.id.web_test).findViewById<TextView>(R.id.textView_content_name)
+            val textViewEmployeeIllustration = view.findViewById<View>(R.id.employee_illustration).findViewById<TextView>(R.id.textView_content_name)
+            val textViewTerminologyIllustration = view.findViewById<View>(R.id.terminology_illustration).findViewById<TextView>(R.id.textView_content_name)
+            val textViewInterviewRegistration = view.findViewById<View>(R.id.interview_registration).findViewById<TextView>(R.id.textView_content_name)
+            val textViewWebInterView = view.findViewById<View>(R.id.web_interview).findViewById<TextView>(R.id.textView_content_name)
+            val textViewComunity = view.findViewById<View>(R.id.comunity).findViewById<TextView>(R.id.textView_content_name)
+
             val textView = view.findViewById<TextView>(R.id.textview_01)
             textView.text = str
+
+            textViewEntrySheet.text = "エントリーシート"
+            textViewWebTest.text = "Webテスト"
+            textViewEmployeeIllustration.text = "社員図鑑"
+            textViewTerminologyIllustration.text = "専門用語図鑑"
+            textViewInterviewRegistration.text = "面接予約"
+            textViewWebInterView.text = "Web面接"
+            textViewComunity.text = "コミュニティ"
         }
 
         val button01 = view.findViewById<Button>(R.id.button_01)
