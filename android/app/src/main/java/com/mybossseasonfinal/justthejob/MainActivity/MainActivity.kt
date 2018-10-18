@@ -68,7 +68,14 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
+            R.id.action_calendar -> Log.d("MainActivity", "Settings Selected!")
+            R.id.action_acceptance_company -> Log.d("MainActivity", "Settings Selected!")
+            R.id.action_read_qr -> {
+                val intent = Intent(this, QrCodeReaderActivity::class.java)
+                startActivity(intent)
+            }
             R.id.action_settings -> Log.d("MainActivity", "Settings Selected!")
+            R.id.action_logout -> Log.d("MainActivity", "Settings Selected!")
         }
         return true
     }
