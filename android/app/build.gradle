@@ -20,6 +20,7 @@ android {
         debug {
             buildConfigField "String", "SKYWAY_API_KEY", "\"${project.property("skywayApiKey")}\""
             buildConfigField "String", "SKYWAY_HOST", "\"${project.property("skywayHost")}\""
+            buildConfigField "String", "API_URL", "\"${project.property("apiUrl")}\""
         }
         release {
             minifyEnabled false
