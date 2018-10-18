@@ -14,6 +14,7 @@ import android.view.MenuItem
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerActivityComponent
 import com.mybossseasonfinal.justthejob.DI.Module.ActivityModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
+import com.mybossseasonfinal.justthejob.MainActivity.NavigationDrawerFragment.NavigationDrawerFragment
 import com.mybossseasonfinal.justthejob.QRcodeReaderActivity.QRcodeReaderActivity
 import com.mybossseasonfinal.justthejob.R
 import com.mybossseasonfinal.justthejob.VideoChatActivity.VideoChatActivity
@@ -48,6 +49,15 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
         //NavigationView Listener
         val navigationView = findViewById<NavigationView>(R.id.navigationView)
         navigationView.setNavigationItemSelectedListener(this)
+
+        //NavigationDrawerFragment
+        if (savedInstanceState == null) {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.addToBackStack(null)
+            var count = 0
+            transaction.replace(R.id.navigationDrawerFragmentContainer, NavigationDrawerFragment.createInstance(count))
+            transaction.commit()
+        }
 
     }
 
