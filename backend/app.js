@@ -8,6 +8,7 @@ var swaggerUi = require('swagger-ui-express');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var companyRouter = require('./routes/company');
 
 var app = express();
 
@@ -38,7 +39,8 @@ var options = {
     },
     apis: [
         './routes/index.js',
-        './routes/users.js'
+        './routes/users.js',
+        './routes/company.js'
     ],
 };
 
@@ -53,6 +55,7 @@ app.get('/api-docs.json', function(req, res){
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/company', companyRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
