@@ -11,14 +11,14 @@ var url_db = 'mongodb://localhost:27017/company'
   */
 /**
   * @swagger
-  * /company/{id}:
+  * /company/{company_id}:
   *   get:
   *     tags:
   *       - company
   *     summary: 企業情報取得
   *     description: 指定された企業の情報を取得する。
   *     parameters:
-  *       -  name: "id"
+  *       -  name: "company_id"
   *          in: "path"
   *          description: 取得したい企業のID
   *          required: true
@@ -68,11 +68,176 @@ router.get('/:id', function(req, res, next) {
     getCompanyInfo(req.params.id,"company", "info", res);
 });
 
+/**
+  * @swagger
+  * /company/{company_id}/employees:
+  *   get:
+  *     tags:
+  *       - company
+  *     summary: 社員情報取得
+  *     description: 企業に所属する全社員の情報を取得する。
+  *     parameters:
+  *       -  name: "company_id"
+  *          in: "path"
+  *          description: 社員情報を取得したい企業のID
+  *          required: true
+  *          type: integer
+  *          format: int32
+  *     responses:
+  *       200:
+  *         description: 成功時のレスポンス
+  *         schema:
+  *           type: object
+  *           description: 社員情報
+  *           properties:
+  *             _id:
+  *               type: integer
+  *               example: 5bc8100cc57a3f116ce0e157
+  *               description: DB登録時のID
+  *             id:
+  *               type: integer
+  *               format: int32
+  *               example: 1
+  *               description: 社員ID
+  *             company_id:
+  *               type: integer
+  *               format: int32
+  *               example: 1
+  *               description: 企業ID
+  *             name:
+  *               type: string
+  *               example: 同志社太郎
+  *               description: 名前
+  *             age:
+  *               type: integer
+  *               format: int32
+  *               example: 30
+  *               description: 年齢
+  *             position:
+  *               type: string
+  *               example: 理工学研究科情報工学専攻
+  *               description: 所属
+  *             join_company:
+  *               type: integer
+  *               format: int32
+  *               example: 2018
+  *               description: 入社年
+  *             working_length:
+  *               type: integer
+  *               format: int32
+  *               example: 6
+  *               description: 勤務年数
+  *             self_introduction:
+  *               type: string
+  *               example: よろしくお願いします．
+  *               description: 自己紹介
+  *             business_outline:
+  *               type: string
+  *               example: Webページの設計
+  *               description: 業務内容
+  *             holiday:
+  *               type: string
+  *               example: 映画鑑賞しています．
+  *               description: 休日の過ごし方
+  *             imp_path:
+  *               type: string
+  *               example: https://s3-ap-northeast-1.amazonaws.com/jphacks2018.images/doshisha_logo.jpg
+  *               description: ロゴの保存先のURL
+  *       404:
+  *         description: 失敗時のレスポンス
+  *         schema:
+  *           type: string
+  */
 //社員一覧を送信
 router.get('/:id/employees', function(req, res, next) {
     getAllEmproyeeInfo(req.params.id,"company", "employees", res);
 });
-
+/**
+  * @swagger
+  * /company/{company_id}/employees/{employees_id}:
+  *   get:
+  *     tags:
+  *       - company
+  *     summary: 社員個人の情報取得
+  *     description: 社員個人の情報を取得する。
+  *     parameters:
+  *       -  name: "company_id"
+  *          in: "path"
+  *          description: 会社のID
+  *          required: true
+  *          type: integer
+  *          format: int32
+  *       -  name: "employees_id"
+  *          in: "path"
+  *          description: 個人のID
+  *          required: true
+  *          type: integer
+  *          format: int32
+  *     responses:
+  *       200:
+  *         description: 成功時のレスポンス
+  *         schema:
+  *           type: object
+  *           description: 社員情報
+  *           properties:
+  *             _id:
+  *               type: integer
+  *               example: 5bc8100cc57a3f116ce0e157
+  *               description: DB登録時のID
+  *             id:
+  *               type: integer
+  *               format: int32
+  *               example: 1
+  *               description: 社員ID
+  *             company_id:
+  *               type: integer
+  *               format: int32
+  *               example: 1
+  *               description: 企業ID
+  *             name:
+  *               type: string
+  *               example: 同志社太郎
+  *               description: 名前
+  *             age:
+  *               type: integer
+  *               format: int32
+  *               example: 30
+  *               description: 年齢
+  *             position:
+  *               type: string
+  *               example: 理工学研究科情報工学専攻
+  *               description: 所属
+  *             join_company:
+  *               type: integer
+  *               format: int32
+  *               example: 2018
+  *               description: 入社年
+  *             working_length:
+  *               type: integer
+  *               format: int32
+  *               example: 6
+  *               description: 勤務年数
+  *             self_introduction:
+  *               type: string
+  *               example: よろしくお願いします．
+  *               description: 自己紹介
+  *             business_outline:
+  *               type: string
+  *               example: Webページの設計
+  *               description: 業務内容
+  *             holiday:
+  *               type: string
+  *               example: 映画鑑賞しています．
+  *               description: 休日の過ごし方
+  *             imp_path:
+  *               type: string
+  *               example: https://s3-ap-northeast-1.amazonaws.com/jphacks2018.images/doshisha_logo.jpg
+  *               description: ロゴの保存先のURL
+  *       404:
+  *         description: 失敗時のレスポンス
+  *         schema:
+  *           type: string
+  */
 //社員個人を送信
 router.get('/:id/employees/:emp_id', function(req, res, next) {
     getEnproyeeInfo(req.params.id,req.params.emp_id,"company", "employees", res);
@@ -145,7 +310,9 @@ function getEnproyeeInfo(_id, emp_id,dbName, collection, res){
         "name": "早稲田大学",
         "founder": "大隈重信",
         "founding": "s24/02/21",
-        "address": "東京都新宿区西早稲田１－６－１"
+        "address": "東京都新宿区西早稲田１－６－１",
+        "img_path":"https://s3-ap-northeast-1.amazonaws.com/jphacks2018.images/akanda_prof.jpg"
+
     }, (error, result) => {
         client.close();
     });
