@@ -11,11 +11,11 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.mybossseasonfinal.justthejob.CompanyRegistrationActivity.QrCodeReaderActivity
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerActivityComponent
 import com.mybossseasonfinal.justthejob.DI.Module.ActivityModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
 import com.mybossseasonfinal.justthejob.MainActivity.NavigationDrawerFragment.NavigationDrawerFragment
-import com.mybossseasonfinal.justthejob.QRcodeReaderActivity.QRcodeReaderActivity
 import com.mybossseasonfinal.justthejob.R
 import com.mybossseasonfinal.justthejob.VideoChatActivity.VideoChatActivity
 import javax.inject.Inject
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_item1 -> {
-                val intent = Intent(this, QRcodeReaderActivity::class.java)
+                val intent = Intent(this, QrCodeReaderActivity::class.java)
                 startActivity(intent)
             }
             R.id.menu_item2 -> {

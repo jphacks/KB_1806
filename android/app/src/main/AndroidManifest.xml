@@ -30,8 +30,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QRcodeReaderActivity.QRcodeReaderActivity" />
-        <activity android:name=".VideoChatActivity.VideoChatActivity"></activity>
+        <activity
+            android:name=".CompanyRegistrationActivity.QrCodeReaderActivity"
+            android:parentActivityName=".CompanyRegistrationActivity.CompanyRegistrationActivity" />
+        <activity android:name=".VideoChatActivity.VideoChatActivity" />
+        <activity android:name=".CompanyRegistrationActivity.CompanyRegistrationActivity"></activity>
     </application>
 
 </manifest>
