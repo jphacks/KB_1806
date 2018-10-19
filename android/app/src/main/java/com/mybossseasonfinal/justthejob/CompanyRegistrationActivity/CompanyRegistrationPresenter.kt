@@ -20,7 +20,7 @@ class CompanyRegistrationPresenter @Inject constructor(private var apiService: A
                 .subscribe(object : DisposableSingleObserver<Company>() {
                     override fun onSuccess(company: Company) {
                         Log.d("getCompany()", "${company}")
-                        view.attachComapnyName(company.name)
+                        view.attachComapnyInfo(company)
                         view.showCompanyName(company.name)
                         view.showCompanyLogo(company.img_path)
                     }
@@ -29,6 +29,13 @@ class CompanyRegistrationPresenter @Inject constructor(private var apiService: A
                         Log.e("getCompany() Error", "{$e.message}")
                     }
                 })
+    }
+
+    /**
+     * 企業情報を追加するPostリクエスト
+     */
+    override fun postCompany(userId: Int, companyId: Int) {
+        Log.d("postCompany()", "${userId} + ${companyId}")
     }
 
 }

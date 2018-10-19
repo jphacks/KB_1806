@@ -17,6 +17,10 @@ interface ApiService {
     fun post(@Body user: User): Completable
 
     // 指定IDの企業情報を取得
-    @GET("/company/{id}")
-    fun getCompany(@Path("id") CompanyId: Int): Single<Company>
+    @GET("/company/{company_id}")
+    fun getCompany(@Path("company_id") companyId: Int): Single<Company>
+
+    // 指定ユーザのmy企業に新しい企業を追加
+    @POST("/users/{user_id}/company/{company_id}")
+    fun postCompany(@Path("user_id") userId: Int, @Path("company_id") companyId: Int): Single<Company>
 }
