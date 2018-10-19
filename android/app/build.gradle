@@ -20,6 +20,7 @@ android {
         debug {
             buildConfigField "String", "SKYWAY_API_KEY", "\"${project.property("skywayApiKey")}\""
             buildConfigField "String", "SKYWAY_HOST", "\"${project.property("skywayHost")}\""
+            buildConfigField "String", "API_URL", "\"${project.property("apiUrl")}\""
         }
         release {
             minifyEnabled false
@@ -65,6 +66,9 @@ dependencies {
 
     //zxing-android-embedded (QRcode reader)
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+
+    // Glide：画像読み込みライブラリ
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
 
 
     implementation 'com.android.support:design:27.1.1'

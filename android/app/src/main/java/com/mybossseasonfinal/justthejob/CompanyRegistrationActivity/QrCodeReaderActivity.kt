@@ -13,14 +13,18 @@ import com.mybossseasonfinal.justthejob.R
 
 class QrCodeReaderActivity : AppCompatActivity() {
 
-    private lateinit var mBarcodeView: CompoundBarcodeView
+    private lateinit var qrCodeReaderView: CompoundBarcodeView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_qrcode_reader)
 
-        mBarcodeView = findViewById(R.id.barcodeView)
-        mBarcodeView.decodeSingle(object : BarcodeCallback {
+        qrCodeReaderView = findViewById(R.id.barcodeView)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        qrCodeReaderView.decodeSingle(object : BarcodeCallback {
             override fun barcodeResult(barcodeResult: BarcodeResult) {
                 Log.d("readQR", barcodeResult.text)
                 toCompanyRegistrationView(barcodeResult.text)
@@ -32,14 +36,17 @@ class QrCodeReaderActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        mBarcodeView.resume()
+        qrCodeReaderView.resume()
     }
 
     override fun onPause() {
         super.onPause()
-        mBarcodeView.pause()
+        qrCodeReaderView.pause()
     }
 
+    /**
+     * 企業登録画面へ遷移
+     */
     private fun toCompanyRegistrationView(companyId: String) {
         val intent = Intent(this, CompanyRegistrationActivity::class.java)
         intent.putExtra("COMPANY_ID", companyId)
