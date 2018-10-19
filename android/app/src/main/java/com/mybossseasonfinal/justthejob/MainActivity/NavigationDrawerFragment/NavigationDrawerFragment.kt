@@ -15,6 +15,8 @@ import com.mybossseasonfinal.justthejob.DI.Component.DaggerFragmentComponent
 import com.mybossseasonfinal.justthejob.DI.Module.FragmentModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
 import com.mybossseasonfinal.justthejob.MainActivity.CompanyListFragment.CompanyListFragment
+import com.mybossseasonfinal.justthejob.MainActivity.WebInterviewFragment.WebInterviewFragment
+import com.mybossseasonfinal.justthejob.MainActivity.WorkerIllustrationFragment.WorkerIllustrationFragment
 import com.mybossseasonfinal.justthejob.Models.Content
 import com.mybossseasonfinal.justthejob.R
 import javax.inject.Inject
@@ -29,6 +31,7 @@ class NavigationDrawerFragment : Fragment(),
 
     private lateinit var textViewMatchingCompany: TextView
     private lateinit var contentsRecyclerView: RecyclerView
+    private lateinit var contentsList: MutableList<Content>
 
     companion object {
         fun createInstance(companyId: Int): NavigationDrawerFragment {
@@ -62,7 +65,7 @@ class NavigationDrawerFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         val args = arguments
 
-        var contentsList = navigationDrawerFragmentPresenter.getContents()
+        contentsList = navigationDrawerFragmentPresenter.getContents()
         viewSetting(view, contentsList)
 
         navigationDrawerFragmentPresenter.getCompany(args!!.getInt("CompanyId"))
@@ -93,6 +96,25 @@ class NavigationDrawerFragment : Fragment(),
 
     override fun onItemClick(view: View, position: Int) {
 //        Toast.makeText(activity, "${contentsList[position].name} がタップされた", Toast.LENGTH_LONG).show()
+
+
+        val fragmentManager = fragmentManager
+        if (fragmentManager != null) {
+            val fragmentTransaction = fragmentManager.beginTransaction()
+
+            when (contentsList[position].name) {
+                "Web面接" -> {
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.replace(R.id.mainFragmentContainer, WebInterviewFragment.createInstance())
+                    fragmentTransaction.commit()
+                }
+                "社員図鑑" -> {
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.replace(R.id.mainFragmentContainer, WorkerIllustrationFragment.createInstance())
+                    fragmentTransaction.commit()
+                }
+            }
+        }
         val drawer = activity?.findViewById<DrawerLayout>(R.id.drawerLayout)
         drawer?.closeDrawer(GravityCompat.START)
     }

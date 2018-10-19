@@ -17,6 +17,7 @@ import com.mybossseasonfinal.justthejob.DI.Component.DaggerActivityComponent
 import com.mybossseasonfinal.justthejob.DI.Module.ActivityModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
 import com.mybossseasonfinal.justthejob.MainActivity.NavigationDrawerFragment.NavigationDrawerFragment
+import com.mybossseasonfinal.justthejob.MainActivity.WorkerIllustrationFragment.WorkerIllustrationFragment
 import com.mybossseasonfinal.justthejob.R
 import com.mybossseasonfinal.justthejob.VideoChatActivity.VideoChatActivity
 import javax.inject.Inject
@@ -56,13 +57,19 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
 
         //NavigationDrawerFragment
         if (savedInstanceState == null) {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.addToBackStack(null)
+            val navigationDrawerTransaction = supportFragmentManager.beginTransaction()
+            val mainFieldTransaction = supportFragmentManager.beginTransaction()
+
+            navigationDrawerTransaction.addToBackStack(null)
+            mainFieldTransaction.addToBackStack(null)
+
             companyId = intent.getIntExtra("companyId", 0)
-            transaction.replace(R.id.navigationDrawerFragmentContainer, NavigationDrawerFragment.createInstance(companyId))
-            transaction.commit()
 
+            navigationDrawerTransaction.replace(R.id.navigationDrawerFragmentContainer, NavigationDrawerFragment.createInstance(companyId))
+            mainFieldTransaction.replace(R.id.mainFragmentContainer, WorkerIllustrationFragment.createInstance())
 
+            navigationDrawerTransaction.commit()
+            mainFieldTransaction.commit()
         }
 
     }
