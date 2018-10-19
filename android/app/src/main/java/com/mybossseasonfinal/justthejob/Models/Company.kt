@@ -6,5 +6,6 @@ data class Company(
         val name: String,
         val founder: String,
         val founding: String,
-        val address: String
+        val address: String,
+        val img_path: String
 )

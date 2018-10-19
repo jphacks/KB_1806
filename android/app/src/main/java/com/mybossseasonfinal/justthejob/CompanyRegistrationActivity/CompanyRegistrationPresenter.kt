@@ -18,6 +18,7 @@ class CompanyRegistrationPresenter @Inject constructor(private var apiService: A
                     override fun onSuccess(company: Company) {
                         Log.d("getCompany()", "${company}")
                         view.showCompanyName(company.name)
+                        view.showCompanyLogo(company.img_path)
                     }
 
                     override fun onError(e: Throwable) {
