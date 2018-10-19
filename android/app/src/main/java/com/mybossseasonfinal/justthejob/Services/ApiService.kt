@@ -2,6 +2,7 @@ package com.mybossseasonfinal.justthejob.Services
 
 import com.mybossseasonfinal.justthejob.Models.Company
 import com.mybossseasonfinal.justthejob.Models.User
+import com.mybossseasonfinal.justthejob.Models.Worker
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
@@ -21,6 +22,10 @@ interface ApiService {
     fun getCompany(@Path("id") CompanyId: Int): Single<Company>
 
     //マッチングしている企業のリストを取得
-    @GET("/company/{id}")
+    @GET("/users/{id}")
     fun getAllCompany(@Path("id") userId: Int): Single<MutableList<Company>>
+
+    //社員情報を取得
+    @GET("/company/{id}/employees")
+    fun getWorkers(@Path("id") companyId: Int): Single<MutableList<Worker>>
 }
