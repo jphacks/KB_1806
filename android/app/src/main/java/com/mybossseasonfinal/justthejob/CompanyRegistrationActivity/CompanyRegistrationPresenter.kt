@@ -2,8 +2,10 @@ package com.mybossseasonfinal.justthejob.CompanyRegistrationActivity
 
 import android.util.Log
 import com.mybossseasonfinal.justthejob.Models.Company
+import com.mybossseasonfinal.justthejob.Models.UsersCompany
 import com.mybossseasonfinal.justthejob.Services.ApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -20,7 +22,7 @@ class CompanyRegistrationPresenter @Inject constructor(private var apiService: A
                 .subscribe(object : DisposableSingleObserver<Company>() {
                     override fun onSuccess(company: Company) {
                         Log.d("getCompany()", "${company}")
-                        view.attachComapnyName(company.name)
+                        view.attachComapnyInfo(company)
                         view.showCompanyName(company.name)
                         view.showCompanyLogo(company.img_path)
                     }
@@ -28,6 +30,26 @@ class CompanyRegistrationPresenter @Inject constructor(private var apiService: A
                     override fun onError(e: Throwable) {
                         Log.e("getCompany() Error", "{$e.message}")
                     }
+                })
+    }
+
+    /**
+     * 企業情報を追加するPostリクエスト
+     */
+    override fun postUsersCompany(userId: Int, companyId: Int) {
+        val usersCompany: UsersCompany = UsersCompany(100, companyId)
+        apiService.postUsersCompany(usersCompany)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : DisposableCompletableObserver() {
+                    override fun onComplete() {
+                        Log.d("postUsersCompany()", "User ID: ${usersCompany.user_id}, Company ID: ${usersCompany.company_id}")
+                    }
+
+                    override fun onError(e: Throwable) {
+                        Log.d("postUsersCompany()", "{$e.message}")
+                    }
+
                 })
     }
 

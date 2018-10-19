@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,6 +13,7 @@ import com.mybossseasonfinal.justthejob.DI.Component.DaggerActivityComponent
 import com.mybossseasonfinal.justthejob.DI.Module.ActivityModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
 import com.mybossseasonfinal.justthejob.MainActivity.MainActivity
+import com.mybossseasonfinal.justthejob.Models.Company
 import com.mybossseasonfinal.justthejob.R
 import javax.inject.Inject
 
@@ -24,7 +26,7 @@ class CompanyRegistrationActivity : AppCompatActivity(), CompanyRegistrationCont
     private lateinit var companyNameView: TextView
     private lateinit var companyLogoImage: ImageView
     private lateinit var registerButton: Button
-    private lateinit var companyName: String
+    private lateinit var companyInfo: Company
 
     @Inject
     lateinit var companyRegistrationPresenter: CompanyRegistrationPresenter
@@ -49,7 +51,7 @@ class CompanyRegistrationActivity : AppCompatActivity(), CompanyRegistrationCont
 
         // 登録ボタンの処理
         registerButton.setOnClickListener {
-            showRegistrationDialog(companyName)
+            showRegistrationDialog(companyInfo)
         }
     }
 
@@ -68,19 +70,21 @@ class CompanyRegistrationActivity : AppCompatActivity(), CompanyRegistrationCont
     }
 
     /**
-     * Presenterで取得した企業名をView内の変数にアタッチ
+     * Presenterで取得した企業情報をView内の変数にアタッチ
      */
-    override fun attachComapnyName(fetchedCompanyName: String) {
-        companyName = fetchedCompanyName
+    override fun attachComapnyInfo(fetchedCompanyInfo: Company) {
+        companyInfo = fetchedCompanyInfo
     }
 
     /**
      * 登録ボタン タップ時の処理
      */
-    private fun showRegistrationDialog(companyName: String) {
+    private fun showRegistrationDialog(companyInfo: Company) {
+        Log.d("hoge", "companyid:${companyInfo.id}")
         AlertDialog.Builder(this)
-                .setTitle("『 ${companyName} 』を\nMy企業として登録しました")
+                .setTitle("『 ${companyInfo.name} 』を\nMy企業として登録しました")
                 .setPositiveButton("OK") { dialog, which ->
+                    companyRegistrationPresenter.postUsersCompany(100, companyInfo.id)
                     toMainView()
                 }.show()
     }
