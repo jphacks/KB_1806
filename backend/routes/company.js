@@ -229,7 +229,7 @@ router.get('/:id/employees', function(req, res, next) {
   *               type: string
   *               example: 映画鑑賞しています．
   *               description: 休日の過ごし方
-  *             imp_path:
+  *             img_path:
   *               type: string
   *               example: https://s3-ap-northeast-1.amazonaws.com/jphacks2018.images/doshisha_logo.jpg
   *               description: ロゴの保存先のURL
