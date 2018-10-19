@@ -19,4 +19,8 @@ interface ApiService {
     // 指定IDの企業情報を取得
     @GET("/company/{id}")
     fun getCompany(@Path("id") CompanyId: Int): Single<Company>
+
+    //マッチングしている企業のリストを取得
+    @GET("/company/{id}")
+    fun getAllCompany(@Path("id") userId: Int): Single<MutableList<Company>>
 }
