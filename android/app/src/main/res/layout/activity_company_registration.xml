@@ -50,7 +50,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="178dp"
                 android:gravity="center_horizontal"
-                android:text="Company Name"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <android.support.constraint.Guideline
