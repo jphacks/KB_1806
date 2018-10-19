@@ -1,4 +1,4 @@
-package com.mybossseasonfinal.justthejob.MainActivity.WorkerIllustrationFragment
+package com.mybossseasonfinal.justthejob.MainActivity.MainFragment.WorkerIllustrationFragment
 
 interface WorkerIllustrationFragmentContract {
     interface View {

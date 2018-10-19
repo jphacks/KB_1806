@@ -1,4 +1,0 @@
-package com.mybossseasonfinal.justthejob.MainActivity.WorkerIllustrationFragment
-
-class WorkerIllustrationFragmentPresenter {
-}

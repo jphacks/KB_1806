@@ -12,7 +12,7 @@ import com.mybossseasonfinal.justthejob.R
 
 class CompanyListAdapter(
         private val context: Context?,
-        private var companies: MutableList<Company>,
+        private var companies: List<Company>,
         private val itemClickListener: ViewHolder.ItemClickListener) : RecyclerView.Adapter<CompanyListAdapter.ViewHolder>() {
 
     private var recyclerView: RecyclerView? = null

@@ -1,4 +1,4 @@
-package com.mybossseasonfinal.justthejob.MainActivity.WebInterviewFragment
+package com.mybossseasonfinal.justthejob.MainActivity.MainFragment.WebInterviewFragment
 
 interface WebInterveiwFragmentContract {
     interface View {

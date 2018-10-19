@@ -24,4 +24,8 @@ interface ApiService {
     // 指定ユーザのmy企業に新しい企業を追加
     @POST("/users/company")
     fun postUsersCompany(@Body usersCompany: UsersCompany): Completable
+
+    //マッチングしている企業のリストを取得
+    @GET("/company/{id}")
+    fun getAllCompany(@Path("id") userId: Int): Single<MutableList<Company>>
 }
