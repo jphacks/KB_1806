@@ -2,8 +2,10 @@ package com.mybossseasonfinal.justthejob.CompanyRegistrationActivity
 
 import android.util.Log
 import com.mybossseasonfinal.justthejob.Models.Company
+import com.mybossseasonfinal.justthejob.Models.UsersCompany
 import com.mybossseasonfinal.justthejob.Services.ApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -34,8 +36,21 @@ class CompanyRegistrationPresenter @Inject constructor(private var apiService: A
     /**
      * 企業情報を追加するPostリクエスト
      */
-    override fun postCompany(userId: Int, companyId: Int) {
-        Log.d("postCompany()", "${userId} + ${companyId}")
+    override fun postUsersCompany(userId: Int, companyId: Int) {
+        val usersCompany: UsersCompany = UsersCompany(100, companyId)
+        apiService.postUsersCompany(usersCompany)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : DisposableCompletableObserver() {
+                    override fun onComplete() {
+                        Log.d("postUsersCompany()", "User ID: ${usersCompany.user_id}, Company ID: ${usersCompany.company_id}")
+                    }
+
+                    override fun onError(e: Throwable) {
+                        Log.d("postUsersCompany()", "{$e.message}")
+                    }
+
+                })
     }
 
 }

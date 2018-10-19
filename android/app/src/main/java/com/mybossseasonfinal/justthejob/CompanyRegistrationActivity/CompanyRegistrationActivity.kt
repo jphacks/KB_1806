@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -79,10 +80,11 @@ class CompanyRegistrationActivity : AppCompatActivity(), CompanyRegistrationCont
      * 登録ボタン タップ時の処理
      */
     private fun showRegistrationDialog(companyInfo: Company) {
+        Log.d("hoge", "companyid:${companyInfo.id}")
         AlertDialog.Builder(this)
                 .setTitle("『 ${companyInfo.name} 』を\nMy企業として登録しました")
                 .setPositiveButton("OK") { dialog, which ->
-                    companyRegistrationPresenter.postCompany(100, companyInfo.id)
+                    companyRegistrationPresenter.postUsersCompany(100, companyInfo.id)
                     toMainView()
                 }.show()
     }

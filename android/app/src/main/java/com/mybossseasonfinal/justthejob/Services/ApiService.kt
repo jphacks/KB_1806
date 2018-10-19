@@ -2,6 +2,7 @@ package com.mybossseasonfinal.justthejob.Services
 
 import com.mybossseasonfinal.justthejob.Models.Company
 import com.mybossseasonfinal.justthejob.Models.User
+import com.mybossseasonfinal.justthejob.Models.UsersCompany
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
@@ -21,6 +22,6 @@ interface ApiService {
     fun getCompany(@Path("company_id") companyId: Int): Single<Company>
 
     // 指定ユーザのmy企業に新しい企業を追加
-    @POST("/users/{user_id}/company/{company_id}")
-    fun postCompany(@Path("user_id") userId: Int, @Path("company_id") companyId: Int): Single<Company>
+    @POST("/users/company")
+    fun postUsersCompany(@Body usersCompany: UsersCompany): Completable
 }

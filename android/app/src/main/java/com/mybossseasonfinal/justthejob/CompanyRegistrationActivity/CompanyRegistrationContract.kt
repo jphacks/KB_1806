@@ -11,6 +11,6 @@ interface CompanyRegistrationContract {
 
     interface Presenter {
         fun getCompany(companyId: Int)
-        fun postCompany(userId: Int, companyId: Int)
+        fun postUsersCompany(userId: Int, companyId: Int)
     }
 }
