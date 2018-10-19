@@ -1,5 +1,6 @@
 package com.mybossseasonfinal.justthejob.CompanyRegistrationActivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerActivityComponent
 import com.mybossseasonfinal.justthejob.DI.Module.ActivityModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
+import com.mybossseasonfinal.justthejob.MainActivity.MainActivity
 import com.mybossseasonfinal.justthejob.R
 import javax.inject.Inject
 
@@ -79,7 +81,15 @@ class CompanyRegistrationActivity : AppCompatActivity(), CompanyRegistrationCont
         AlertDialog.Builder(this)
                 .setTitle("『 ${companyName} 』を\nMy企業として登録しました")
                 .setPositiveButton("OK") { dialog, which ->
+                    toMainView()
                 }.show()
     }
 
+    /**
+     * メイン画面へ遷移
+     */
+    private fun toMainView() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 }

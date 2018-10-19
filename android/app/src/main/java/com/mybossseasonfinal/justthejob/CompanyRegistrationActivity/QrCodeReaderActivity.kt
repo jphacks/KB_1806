@@ -44,6 +44,9 @@ class QrCodeReaderActivity : AppCompatActivity() {
         qrCodeReaderView.pause()
     }
 
+    /**
+     * 企業登録画面へ遷移
+     */
     private fun toCompanyRegistrationView(companyId: String) {
         val intent = Intent(this, CompanyRegistrationActivity::class.java)
         intent.putExtra("COMPANY_ID", companyId)
