@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -102,6 +103,8 @@ class CompanyListFragment : Fragment(),
         companyListRecyclerView = view!!.findViewById<RecyclerView>(R.id.matching_company_list)
         companyListRecyclerView.adapter = CompanyListAdapter(activity, matchingCompanyList, this)
         companyListRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        val itemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+        companyListRecyclerView.addItemDecoration(itemDecoration)
     }
 
 

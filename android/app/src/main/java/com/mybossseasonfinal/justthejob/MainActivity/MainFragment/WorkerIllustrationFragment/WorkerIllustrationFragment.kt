@@ -44,8 +44,9 @@ class WorkerIllustrationFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val args = arguments
 
-        setWorkersRecyclerView()
+        setWorkersRecyclerView(args)
     }
 
     override fun onItemClick(view: View, position: Int) {
@@ -59,8 +60,8 @@ class WorkerIllustrationFragment : Fragment(),
         workerListRecyclerView.adapter.notifyDataSetChanged()
     }
 
-    private fun setWorkersRecyclerView() {
-        val companyId = 1
+    private fun setWorkersRecyclerView(args: Bundle?) {
+        val companyId = args!!.getInt("CompanyId")
         workerIllustrationFragmentPresenter.getWorkers(companyId)
         workerListRecyclerView = view!!.findViewById<RecyclerView>(R.id.worker_recycler)
         workerListRecyclerView.adapter = WorkerIllustrationAdapter(activity, workers, this)
@@ -69,8 +70,12 @@ class WorkerIllustrationFragment : Fragment(),
 
 
     companion object {
-        fun createInstance(): WorkerIllustrationFragment {
-            return WorkerIllustrationFragment()
+        fun createInstance(companyId: Int): WorkerIllustrationFragment {
+            val workerIllustrationFragment = WorkerIllustrationFragment()
+            val args = Bundle()
+            args.putInt("CompanyId", companyId)
+            workerIllustrationFragment.arguments = args
+            return workerIllustrationFragment
         }
     }
 }

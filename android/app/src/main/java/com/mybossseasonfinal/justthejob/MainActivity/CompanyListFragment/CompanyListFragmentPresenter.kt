@@ -22,11 +22,6 @@ class CompanyListFragmentPresenter @Inject constructor(
                     }
 
                     override fun onError(e: Throwable) {
-                        var result2 = mutableListOf<Company>(
-                                Company(_id = "1", id = 1, name = "Error", founder = "", founding = "", address = "", img_path = ""),
-                                Company(_id = "2", id = 2, name = "Error2", founder = "", founding = "", address = "", img_path = "")
-                        )
-                        view.setMatchedCompany(result2)
                         Log.e("getCompany() Error", "{$e.message}")
                     }
                 })

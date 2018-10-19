@@ -12,6 +12,6 @@ data class Worker(
         val self_introduction: String,
         val business_outline: String,
         val holiday: String,
-        val imp_path: String
+        val img_path: String
 
 )

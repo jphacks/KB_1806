@@ -11,7 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerFragmentComponent
 import com.mybossseasonfinal.justthejob.DI.Module.FragmentModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
@@ -35,6 +37,7 @@ class NavigationDrawerFragment : Fragment(),
     lateinit var navigationDrawerFragmentPresenter: NavigationDrawerFragmentPresenter
 
     private lateinit var textViewMatchingCompany: TextView
+    private lateinit var imageViewCompanyLogo: ImageView
     private lateinit var contentsRecyclerView: RecyclerView
     private lateinit var contentsList: MutableList<Content>
 
@@ -111,7 +114,7 @@ class NavigationDrawerFragment : Fragment(),
                 }
                 "社員図鑑" -> {
                     fragmentTransaction.addToBackStack(null)
-                    fragmentTransaction.replace(R.id.mainFragmentContainer, WorkerIllustrationFragment.createInstance())
+                    fragmentTransaction.replace(R.id.mainFragmentContainer, WorkerIllustrationFragment.createInstance(arguments!!.getInt("CompanyId")))
                     fragmentTransaction.commit()
                 }
                 "専門用語図鑑" -> {
@@ -144,8 +147,13 @@ class NavigationDrawerFragment : Fragment(),
         textViewMatchingCompany.text = companyName
     }
 
+    override fun showCompanyLogo(companyLogoUrl: String) {
+        Glide.with(this).load(companyLogoUrl).into(imageViewCompanyLogo)
+    }
+
     private fun viewSetting(view: View, contentsList: MutableList<Content>) {
         textViewMatchingCompany = view.findViewById<TextView>(R.id.textView_companyName)
+        imageViewCompanyLogo = view.findViewById(R.id.imageView_companyLogo)
 
         contentsRecyclerView = view.findViewById<RecyclerView>(R.id.contents_list)
         contentsRecyclerView.adapter = ContentsAdapter(activity!!.applicationContext, contentsList, this)
