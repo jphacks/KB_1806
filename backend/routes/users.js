@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var MongoClient = require("mongodb").MongoClient;
+var assert = require('assert')
+var url_db = 'mongodb://localhost:27017/company'
 
 /**
  * @swagger
@@ -50,21 +53,49 @@ router.post('/login', function(req, res) {
     res.json(req.body);
 });
 
-//社員個人を送信
-router.post('/:user_id/company/:company_id', function(req, res, next) {
-    postUserCompany(req.params.user_id, req.params.company_id, "company", "users_company", res);
+
+/**
+ * @swagger
+ * /users/company:
+ *   post:
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user_id
+ *         in: formData
+ *         required: true
+ *         dataType: integer
+ *       - name: company_id
+ *         in: formData
+ *         required: true
+ *         dataType: integer
+ *     responses:
+ *       200:
+ *         description: add
+ */
+// ユーザのMy企業に指定企業を追加
+router.post('/company', function(req, res, next) {
+    postUserCompany(req.body.user_id, req.body.company_id, res);
 });
 
-function postUserCompany(user_id, company_id, dbName, collection, res){
+// ユーザのMy企業に指定企業を保存
+function postUserCompany(user_id, company_id, res){
     // MongoDB へ 接続
     MongoClient.connect(url_db, (error, client) => {
-        const db = client.db(dbName);
+        const db = client.db('company');
 
         // コレクションの取得
-        collection = db.collection(collection);
-        collection.insert({user_id:Number(user_id), company_id:Number(company_id)}).toArray((error, documents)=>{
-            if(documents[0] != null) res.json(documents[0]);
-            else res.send("error:id not found");
+        collection = db.collection('users_company');
+        collection.insertOne({
+            'user_id': user_id,
+            'company_id': company_id
+
+        }, (error, result) => {
+            client.close();
+        });
+        res.json({
+            'user_id': user_id,
+            'company_id': company_id
         });
     });
 };
