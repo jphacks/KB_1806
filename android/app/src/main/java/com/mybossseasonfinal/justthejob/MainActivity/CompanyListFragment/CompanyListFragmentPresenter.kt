@@ -12,8 +12,8 @@ class CompanyListFragmentPresenter @Inject constructor(
         private val apiService: ApiService,
         private val view: CompanyListFragmentContract.View) : CompanyListFragmentContract.Presenter {
 
-    fun getMatchedCompanyList() {
-        apiService.getAllCompany()
+    fun getMatchedCompanyList(userId: Int) {
+        apiService.getAllCompany(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : DisposableSingleObserver<MutableList<Company>>() {

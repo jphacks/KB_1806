@@ -106,7 +106,8 @@ class CompanyListFragment : Fragment(),
 
     //マッチング済み会社リストの設定
     private fun setMatchedCompanyRecyclerView() {
-        companyListFragmentPresenter.getMatchedCompanyList()
+        val userId = 1
+        companyListFragmentPresenter.getMatchedCompanyList(userId)
         companyListRecyclerView = view!!.findViewById<RecyclerView>(R.id.matching_company_list)
         companyListRecyclerView.adapter = CompanyListAdapter(activity, matchingCompanyList, this)
         companyListRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)

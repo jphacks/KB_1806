@@ -22,5 +22,5 @@ interface ApiService {
 
     //マッチングしている企業のリストを取得
     @GET("/company/{id}")
-    fun getAllCompany(): Single<MutableList<Company>>
+    fun getAllCompany(@Path("id") userId: Int): Single<MutableList<Company>>
 }
