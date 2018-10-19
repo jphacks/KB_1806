@@ -26,7 +26,7 @@ class ApiModule {
         return Retrofit.Builder()
 //                .baseUrl("http://119.228.76.176:62455/api/") // ここのURLは立てるサーバURL
 //                .baseUrl("https://radiant-reaches-45097.herokuapp.com/") // ここのURLは立てるサーバURL
-                .baseUrl("http://192.168.1.105:3000/") // ここのURLは立てるサーバURL
+                .baseUrl("http://ec2-54-238-143-217.ap-northeast-1.compute.amazonaws.com:3000/") // ここのURLは立てるサーバURL
                 .client(okHttpClient)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

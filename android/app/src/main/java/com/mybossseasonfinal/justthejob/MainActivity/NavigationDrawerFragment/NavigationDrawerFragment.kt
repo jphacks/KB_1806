@@ -29,13 +29,15 @@ class NavigationDrawerFragment : Fragment(),
     lateinit var navigationDrawerFragmentPresenter: NavigationDrawerFragmentPresenter
 
     private lateinit var contentsList: MutableList<Content>
+    private lateinit var textViewMatchingCompany: TextView
     private var cnt = 0
 
     companion object {
-        fun createInstance(count: Int): NavigationDrawerFragment {
+        fun createInstance(companyId: Int): NavigationDrawerFragment {
             val navigationDrawerFragment = NavigationDrawerFragment()
             val args = Bundle()
-            args.putInt("Counter", count)
+            args.putInt("CompanyId", companyId)
+//            args.putString("CompanyName",companyName)
             navigationDrawerFragment.arguments = args
             return navigationDrawerFragment
         }
@@ -63,20 +65,17 @@ class NavigationDrawerFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         val args = arguments
 
+
+        //ここでCompanyIdからCompanyNameを掘ってくる
+        textViewMatchingCompany = view.findViewById<TextView>(R.id.textView_companyName)
+
+        var company = navigationDrawerFragmentPresenter.getCompany(args!!.getInt("CompanyId"))
+
+
         contentsList = navigationDrawerFragmentPresenter.getContents()
         val contentsRecyclerView = view.findViewById<RecyclerView>(R.id.contents_list)
         contentsRecyclerView.adapter = ContentsAdapter(activity!!.applicationContext, contentsList, this)
         contentsRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-//        var layoutManager = contentsRecyclerView.layoutManager as LinearLayoutManager
-
-        if (args != null) {
-            val count = args.getInt("Counter")
-            val str = "NavigationDrawerFragment$count"
-            cnt = count + 1
-
-            val textView = view.findViewById<TextView>(R.id.textview_01)
-            textView.text = str
-        }
 
         val button01 = view.findViewById<Button>(R.id.button_01)
         button01.setOnClickListener {
@@ -86,7 +85,7 @@ class NavigationDrawerFragment : Fragment(),
 
                 //BackStackを設定
                 fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.replace(R.id.navigationDrawerFragmentContainer, CompanyListFragment.createInstance(cnt))
+                fragmentTransaction.replace(R.id.navigationDrawerFragmentContainer, CompanyListFragment.createInstance())
                 fragmentTransaction.commit()
             }
         }
@@ -105,5 +104,9 @@ class NavigationDrawerFragment : Fragment(),
         Toast.makeText(activity, "${contentsList[position].name} がタップされた", Toast.LENGTH_LONG).show()
         val drawer = activity?.findViewById<DrawerLayout>(R.id.drawerLayout)
         drawer?.closeDrawer(GravityCompat.START)
+    }
+
+    override fun showCompanyName(companyName: String) {
+        textViewMatchingCompany.text = companyName
     }
 }

@@ -28,17 +28,13 @@
 
 
         <!-- The main content view -->
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/mainFragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hello World!" />
-        </RelativeLayout>
+        </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 

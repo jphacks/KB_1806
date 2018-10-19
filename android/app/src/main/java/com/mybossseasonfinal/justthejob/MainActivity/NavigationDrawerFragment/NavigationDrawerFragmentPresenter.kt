@@ -1,7 +1,12 @@
 package com.mybossseasonfinal.justthejob.MainActivity.NavigationDrawerFragment
 
+import android.util.Log
+import com.mybossseasonfinal.justthejob.Models.Company
 import com.mybossseasonfinal.justthejob.Models.Content
 import com.mybossseasonfinal.justthejob.Services.ApiService
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class NavigationDrawerFragmentPresenter @Inject constructor(
@@ -18,5 +23,22 @@ class NavigationDrawerFragmentPresenter @Inject constructor(
                 Content(name = "Web面接"),
                 Content(name = "コミュニティ")
         )
+    }
+
+    fun getCompany(companyId: Int) {
+        apiService.getCompany(companyId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : DisposableSingleObserver<Company>() {
+                    override fun onSuccess(company: Company) {
+                        Log.d("getCompany()", "${company}")
+                        view.showCompanyName(company.name)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        Log.e("getCompany() Error", "{$e.message}")
+                    }
+                })
+
     }
 }

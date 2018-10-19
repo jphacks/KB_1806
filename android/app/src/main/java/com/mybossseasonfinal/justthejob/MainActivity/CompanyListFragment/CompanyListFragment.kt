@@ -1,5 +1,6 @@
 package com.mybossseasonfinal.justthejob.MainActivity.CompanyListFragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
@@ -15,6 +16,7 @@ import android.widget.Toast
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerFragmentComponent
 import com.mybossseasonfinal.justthejob.DI.Module.FragmentModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
+import com.mybossseasonfinal.justthejob.MainActivity.MainActivity
 import com.mybossseasonfinal.justthejob.MainActivity.NavigationDrawerFragment.NavigationDrawerFragment
 import com.mybossseasonfinal.justthejob.Models.Company
 import com.mybossseasonfinal.justthejob.R
@@ -28,16 +30,12 @@ class CompanyListFragment : Fragment(),
     @Inject
     lateinit var companyListFragmentPresenter: CompanyListFragmentPresenter
     private lateinit var matchingCompanyList: MutableList<Company>
-    private var cnt = 0
+    private var companyId = 0
 
 
     companion object {
-        fun createInstance(count: Int): CompanyListFragment {
-            val companyListFragment = CompanyListFragment()
-            val args = Bundle()
-            args.putInt("Counter", count)
-            companyListFragment.arguments = args
-            return companyListFragment
+        fun createInstance(): CompanyListFragment {
+            return CompanyListFragment()
         }
     }
 
@@ -62,21 +60,13 @@ class CompanyListFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         val args = arguments
 
+
         //マッチング済み会社リストの設定
         matchingCompanyList = companyListFragmentPresenter.getMatchingCompanyList()
         val companyListRecyclerView = view.findViewById<RecyclerView>(R.id.matching_company_list)
         companyListRecyclerView.adapter = CompanyListAdapter(activity, matchingCompanyList, this)
         companyListRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-//        var layoutManager = companyListRecyclerView.layoutManager as LinearLayoutManager
-
-        if (args != null) {
-            val count = args.getInt("Counter")
-            val str = "CompanyListFragment$count"
-            cnt = count + 1
-
-            val textView = view.findViewById<TextView>(R.id.textview_02)
-            textView.text = str
-        }
+        
 
         val button02 = view.findViewById<Button>(R.id.button_02)
         button02.setOnClickListener {
@@ -86,7 +76,7 @@ class CompanyListFragment : Fragment(),
 
                 //BackStackを設定
                 fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.replace(R.id.navigationDrawerFragmentContainer, NavigationDrawerFragment.createInstance(cnt))
+                fragmentTransaction.replace(R.id.navigationDrawerFragmentContainer, NavigationDrawerFragment.createInstance(companyId))
                 fragmentTransaction.commit()
             }
         }
@@ -105,5 +95,9 @@ class CompanyListFragment : Fragment(),
         Toast.makeText(activity, "${matchingCompanyList[position].name} がタップされた", Toast.LENGTH_LONG).show()
         val drawer = activity?.findViewById<DrawerLayout>(R.id.drawerLayout)
         drawer?.closeDrawer(GravityCompat.START)
+        val intent = Intent(activity, MainActivity::class.java)
+        intent.putExtra("companyId", matchingCompanyList[position].id)
+        startActivity(intent)
+        activity!!.finish()
     }
 }
