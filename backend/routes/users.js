@@ -51,7 +51,6 @@ router.get('/', function(req, res, next) {
 router.post('/login', function(req, res) {
     res.json(req.body);
 });
-
 //学生が登録した企業一覧をリストで送信
 router.get('/:userID', function(req, res, next) {
     getCompanyList(req.params.userID,"company", "users_company", res);
@@ -96,4 +95,54 @@ function getCompanyList(_id, dbName, collection, res){
     });
   });
 };
+
+
+/**
+ * @swagger
+ * /users/company:
+ *   post:
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user_id
+ *         in: formData
+ *         required: true
+ *         dataType: integer
+ *       - name: company_id
+ *         in: formData
+ *         required: true
+ *         dataType: integer
+ *     responses:
+ *       200:
+ *         description: add
+ */
+// ユーザのMy企業に指定企業を追加
+router.post('/company', function(req, res, next) {
+    postUserCompany(req.body.user_id, req.body.company_id, res);
+});
+
+// ユーザのMy企業に指定企業を保存
+function postUserCompany(user_id, company_id, res){
+    // MongoDB へ 接続
+    MongoClient.connect(url_db, (error, client) => {
+        const db = client.db('company');
+
+        // コレクションの取得
+        collection = db.collection('users_company');
+        collection.insertOne({
+            'user_id': user_id,
+            'company_id': company_id
+
+        }, (error, result) => {
+            client.close();
+        });
+        res.json({
+            'user_id': user_id,
+            'company_id': company_id
+        });
+    });
+};
+
+
+
 module.exports = router;
