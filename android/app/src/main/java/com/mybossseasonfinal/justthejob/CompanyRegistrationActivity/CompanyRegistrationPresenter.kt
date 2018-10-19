@@ -10,6 +10,9 @@ import javax.inject.Inject
 
 class CompanyRegistrationPresenter @Inject constructor(private var apiService: ApiService, private var view: CompanyRegistrationContract.View) : CompanyRegistrationContract.Presenter {
 
+    /**
+     * 企業情報を取得するGetリクエスト
+     */
     override fun getCompany(companyId: Int) {
         apiService.getCompany(companyId)
                 .subscribeOn(Schedulers.io())
@@ -17,9 +20,9 @@ class CompanyRegistrationPresenter @Inject constructor(private var apiService: A
                 .subscribe(object : DisposableSingleObserver<Company>() {
                     override fun onSuccess(company: Company) {
                         Log.d("getCompany()", "${company}")
-                        view.showCompanyId(company.id)
+                        view.attachComapnyName(company.name)
                         view.showCompanyName(company.name)
-                        view.showCompanyAddress(company.address)
+                        view.showCompanyLogo(company.img_path)
                     }
 
                     override fun onError(e: Throwable) {
