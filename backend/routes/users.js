@@ -140,13 +140,14 @@ function getCompanyList(_id, dbName, collection, res){
                       companyList.push(documentsCmp[0]);
                       if(documents.length==count){
                         console.log(companyList);
-                        res.send(companyList);
+                        res.json(companyList);
                       }
                       count++;
                   }
               });
           }
       }
+      else res.send("error:このユーザは企業を登録していない，または存在しないユーザです");
     });
   });
 };
