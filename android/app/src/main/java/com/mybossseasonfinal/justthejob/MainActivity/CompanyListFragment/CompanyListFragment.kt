@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerFragmentComponent
 import com.mybossseasonfinal.justthejob.DI.Module.FragmentModule
@@ -29,7 +28,7 @@ class CompanyListFragment : Fragment(),
 
     @Inject
     lateinit var companyListFragmentPresenter: CompanyListFragmentPresenter
-    private lateinit var matchingCompanyList: MutableList<Company>
+    private lateinit var matchingCompanyList: List<Company>
     private var companyId = 0
 
 
@@ -66,7 +65,7 @@ class CompanyListFragment : Fragment(),
         val companyListRecyclerView = view.findViewById<RecyclerView>(R.id.matching_company_list)
         companyListRecyclerView.adapter = CompanyListAdapter(activity, matchingCompanyList, this)
         companyListRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        
+
 
         val button02 = view.findViewById<Button>(R.id.button_02)
         button02.setOnClickListener {
@@ -99,5 +98,12 @@ class CompanyListFragment : Fragment(),
         intent.putExtra("companyId", matchingCompanyList[position].id)
         startActivity(intent)
         activity!!.finish()
+    }
+
+    override fun showMatchingCompanyList(companies: List<Company>) {
+        val companyListRecyclerView = view!!.findViewById<RecyclerView>(R.id.matching_company_list)
+        companyListRecyclerView.adapter = CompanyListAdapter(activity, companies, this)
+        companyListRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+
     }
 }
