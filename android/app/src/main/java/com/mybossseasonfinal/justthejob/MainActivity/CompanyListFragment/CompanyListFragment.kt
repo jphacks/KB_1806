@@ -1,43 +1,41 @@
 package com.mybossseasonfinal.justthejob.MainActivity.CompanyListFragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerFragmentComponent
 import com.mybossseasonfinal.justthejob.DI.Module.FragmentModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
+import com.mybossseasonfinal.justthejob.MainActivity.MainActivity
 import com.mybossseasonfinal.justthejob.MainActivity.NavigationDrawerFragment.NavigationDrawerFragment
+import com.mybossseasonfinal.justthejob.Models.Company
 import com.mybossseasonfinal.justthejob.R
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class CompanyListFragment : Fragment(),
+        CompanyListFragmentContract.View,
+        CompanyListAdapter.ViewHolder.ItemClickListener {
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [CompanyListFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [CompanyListFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
-class CompanyListFragment : Fragment(), CompanyListFragmentContract.View {
-    private var cnt = 0
+
+    @Inject
+    lateinit var companyListFragmentPresenter: CompanyListFragmentPresenter
+    private lateinit var matchingCompanyList: MutableList<Company>
+    private var companyId = 0
 
 
     companion object {
-        fun createInstance(count: Int): CompanyListFragment {
-            val companyListFragment = CompanyListFragment()
-            val args = Bundle()
-            args.putInt("Counter", count)
-            companyListFragment.arguments = args
-            return companyListFragment
+        fun createInstance(): CompanyListFragment {
+            return CompanyListFragment()
         }
     }
 
@@ -62,14 +60,13 @@ class CompanyListFragment : Fragment(), CompanyListFragmentContract.View {
         super.onViewCreated(view, savedInstanceState)
         val args = arguments
 
-        if (args != null) {
-            val count = args.getInt("Counter")
-            val str = "CompanyListFragment$count"
-            cnt = count + 1
 
-            val textView = view.findViewById<TextView>(R.id.textview_02)
-            textView.text = str
-        }
+        //マッチング済み会社リストの設定
+        matchingCompanyList = companyListFragmentPresenter.getMatchingCompanyList()
+        val companyListRecyclerView = view.findViewById<RecyclerView>(R.id.matching_company_list)
+        companyListRecyclerView.adapter = CompanyListAdapter(activity, matchingCompanyList, this)
+        companyListRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        
 
         val button02 = view.findViewById<Button>(R.id.button_02)
         button02.setOnClickListener {
@@ -79,7 +76,7 @@ class CompanyListFragment : Fragment(), CompanyListFragmentContract.View {
 
                 //BackStackを設定
                 fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.replace(R.id.navigationDrawerFragmentContainer, NavigationDrawerFragment.createInstance(cnt))
+                fragmentTransaction.replace(R.id.navigationDrawerFragmentContainer, NavigationDrawerFragment.createInstance(companyId))
                 fragmentTransaction.commit()
             }
         }
@@ -92,5 +89,15 @@ class CompanyListFragment : Fragment(), CompanyListFragmentContract.View {
                 fragmentManager.popBackStack()
             }
         }
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        Toast.makeText(activity, "${matchingCompanyList[position].name} がタップされた", Toast.LENGTH_LONG).show()
+        val drawer = activity?.findViewById<DrawerLayout>(R.id.drawerLayout)
+        drawer?.closeDrawer(GravityCompat.START)
+        val intent = Intent(activity, MainActivity::class.java)
+        intent.putExtra("companyId", matchingCompanyList[position].id)
+        startActivity(intent)
+        activity!!.finish()
     }
 }

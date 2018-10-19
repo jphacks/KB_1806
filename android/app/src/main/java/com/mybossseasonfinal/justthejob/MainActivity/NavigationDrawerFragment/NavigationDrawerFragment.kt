@@ -2,43 +2,42 @@ package com.mybossseasonfinal.justthejob.MainActivity.NavigationDrawerFragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerFragmentComponent
 import com.mybossseasonfinal.justthejob.DI.Module.FragmentModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
 import com.mybossseasonfinal.justthejob.MainActivity.CompanyListFragment.CompanyListFragment
+import com.mybossseasonfinal.justthejob.Models.Content
 import com.mybossseasonfinal.justthejob.R
 import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class NavigationDrawerFragment : Fragment(),
+        NavigationDrawerFragmentContract.View,
+        ContentsAdapter.ViewHolder.ItemClickListener {
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [NavigationDrawerFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [NavigationDrawerFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
-class NavigationDrawerFragment : Fragment(), NavigationDrawerFragmentContract.View {
 
     @Inject
     lateinit var navigationDrawerFragmentPresenter: NavigationDrawerFragmentPresenter
+
+    private lateinit var contentsList: MutableList<Content>
+    private lateinit var textViewMatchingCompany: TextView
     private var cnt = 0
 
     companion object {
-        fun createInstance(count: Int): NavigationDrawerFragment {
+        fun createInstance(companyId: Int): NavigationDrawerFragment {
             val navigationDrawerFragment = NavigationDrawerFragment()
             val args = Bundle()
-            args.putInt("Counter", count)
+            args.putInt("CompanyId", companyId)
+//            args.putString("CompanyName",companyName)
             navigationDrawerFragment.arguments = args
             return navigationDrawerFragment
         }
@@ -58,22 +57,25 @@ class NavigationDrawerFragment : Fragment(), NavigationDrawerFragmentContract.Vi
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         super.onCreateView(inflater, container, savedInstanceState)
-        val view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false)
-        return view
+        return inflater.inflate(R.layout.fragment_navigation_drawer, container, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args = arguments
 
-        if (args != null) {
-            val count = args.getInt("Counter")
-            val str = "NavigationDrawerFragment$count"
-            cnt = count + 1
 
-            val textView = view.findViewById<TextView>(R.id.textview_01)
-            textView.text = str
-        }
+        //ここでCompanyIdからCompanyNameを掘ってくる
+        textViewMatchingCompany = view.findViewById<TextView>(R.id.textView_companyName)
+
+        var company = navigationDrawerFragmentPresenter.getCompany(args!!.getInt("CompanyId"))
+
+
+        contentsList = navigationDrawerFragmentPresenter.getContents()
+        val contentsRecyclerView = view.findViewById<RecyclerView>(R.id.contents_list)
+        contentsRecyclerView.adapter = ContentsAdapter(activity!!.applicationContext, contentsList, this)
+        contentsRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
         val button01 = view.findViewById<Button>(R.id.button_01)
         button01.setOnClickListener {
@@ -83,7 +85,7 @@ class NavigationDrawerFragment : Fragment(), NavigationDrawerFragmentContract.Vi
 
                 //BackStackを設定
                 fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.replace(R.id.navigationDrawerFragmentContainer, CompanyListFragment.createInstance(cnt))
+                fragmentTransaction.replace(R.id.navigationDrawerFragmentContainer, CompanyListFragment.createInstance())
                 fragmentTransaction.commit()
             }
         }
@@ -96,5 +98,15 @@ class NavigationDrawerFragment : Fragment(), NavigationDrawerFragmentContract.Vi
                 fragmentManager.popBackStack()
             }
         }
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        Toast.makeText(activity, "${contentsList[position].name} がタップされた", Toast.LENGTH_LONG).show()
+        val drawer = activity?.findViewById<DrawerLayout>(R.id.drawerLayout)
+        drawer?.closeDrawer(GravityCompat.START)
+    }
+
+    override fun showCompanyName(companyName: String) {
+        textViewMatchingCompany.text = companyName
     }
 }

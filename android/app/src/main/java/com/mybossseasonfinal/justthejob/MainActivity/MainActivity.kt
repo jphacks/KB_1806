@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.mybossseasonfinal.justthejob.CompanyRegistrationActivity.QrCodeReaderActivity
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerActivityComponent
 import com.mybossseasonfinal.justthejob.DI.Module.ActivityModule
@@ -24,6 +25,9 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
 
     @Inject
     lateinit var mainPresenter: MainPresenter
+
+    var companyId = 0
+    var count = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,11 +58,18 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
         if (savedInstanceState == null) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.addToBackStack(null)
-            var count = 0
-            transaction.replace(R.id.navigationDrawerFragmentContainer, NavigationDrawerFragment.createInstance(count))
+            companyId = intent.getIntExtra("companyId", 0)
+            transaction.replace(R.id.navigationDrawerFragmentContainer, NavigationDrawerFragment.createInstance(companyId))
             transaction.commit()
+
+
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Toast.makeText(this, "現在表示中企業のCompanyID：$companyId", Toast.LENGTH_LONG).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -98,4 +109,5 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
+
 }
