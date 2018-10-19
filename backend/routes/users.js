@@ -82,7 +82,7 @@ function getCompanyList(_id, dbName, collection, res){
               collectionCompany = db.collection("info");
               collectionCompany.find({id:document.company_id}).toArray((error, documents)=>{
                   if(documents[0] != null){
-                      companyList.push(documents[0].name);
+                      companyList.push(documents[0]);
                       if(documents.length==count){
                         console.log(companyList);
                         res.send(companyList);
