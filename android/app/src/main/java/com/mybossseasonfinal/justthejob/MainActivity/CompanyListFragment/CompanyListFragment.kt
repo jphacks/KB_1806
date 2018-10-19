@@ -73,15 +73,6 @@ class CompanyListFragment : Fragment(),
                 fragmentTransaction.commit()
             }
         }
-
-        //BackStackで一つ戻す
-        val pop2 = view.findViewById<Button>(R.id.pop_02)
-        pop2.setOnClickListener {
-            val fragmentManager = fragmentManager
-            if (fragmentManager != null) {
-                fragmentManager.popBackStack()
-            }
-        }
     }
 
     override fun onItemClick(view: View, position: Int) {

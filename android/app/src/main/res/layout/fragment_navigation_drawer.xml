@@ -9,7 +9,10 @@
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="30dp"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal">
 
         <ImageView
@@ -20,8 +23,8 @@
 
         <TextView
             android:id="@+id/textView_companyName"
-            android:layout_width="147dp"
-            android:layout_height="29dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="TextView" />
 
@@ -29,7 +32,6 @@
             android:id="@+id/imageView_acceptance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:src="@mipmap/ic_launcher" />
 
         <Button
@@ -42,7 +44,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="4">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,19 +62,6 @@
                 android:id="@+id/comunity_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
-            <TextView
-                android:id="@+id/textview_01"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#00f"
-                android:textSize="30sp" />
-
-            <Button
-                android:id="@+id/pop_01"
-                android:layout_width="178dp"
-                android:layout_height="wrap_content"
-                android:text="pop01" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
