@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
-    tools:context=".MainActivity.MainFragment.WebInterviewFragment.WebInterviewFragment">
+    android:background="@color/colorPrimary"
+    tools:context=".MainActivity.MainFragment.EntrySheetFragment.EntrySheetFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

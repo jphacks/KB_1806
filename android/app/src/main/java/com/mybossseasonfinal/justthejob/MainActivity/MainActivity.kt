@@ -16,8 +16,8 @@ import com.mybossseasonfinal.justthejob.CompanyRegistrationActivity.QrCodeReader
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerActivityComponent
 import com.mybossseasonfinal.justthejob.DI.Module.ActivityModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
+import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.WorkerIllustrationFragment.WorkerIllustrationFragment
 import com.mybossseasonfinal.justthejob.MainActivity.NavigationDrawerFragment.NavigationDrawerFragment
-import com.mybossseasonfinal.justthejob.MainActivity.WorkerIllustrationFragment.WorkerIllustrationFragment
 import com.mybossseasonfinal.justthejob.R
 import com.mybossseasonfinal.justthejob.VideoChatActivity.VideoChatActivity
 import javax.inject.Inject
