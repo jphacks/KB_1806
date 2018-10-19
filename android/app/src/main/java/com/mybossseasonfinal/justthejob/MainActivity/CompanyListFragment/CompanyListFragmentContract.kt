@@ -4,7 +4,7 @@ import com.mybossseasonfinal.justthejob.Models.Company
 
 interface CompanyListFragmentContract {
     interface View {
-        fun showMatchingCompanyList(companies: List<Company>)
+        fun setMatchedCompany(companies: MutableList<Company>)
     }
 
     interface Presenter {

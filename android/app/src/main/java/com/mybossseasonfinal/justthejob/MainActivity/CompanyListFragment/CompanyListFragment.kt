@@ -28,8 +28,10 @@ class CompanyListFragment : Fragment(),
 
     @Inject
     lateinit var companyListFragmentPresenter: CompanyListFragmentPresenter
-    private lateinit var matchingCompanyList: List<Company>
+    private lateinit var companyListRecyclerView: RecyclerView
+
     private var companyId = 0
+    private var matchingCompanyList: MutableList<Company> = mutableListOf<Company>()
 
 
     companion object {
@@ -37,7 +39,6 @@ class CompanyListFragment : Fragment(),
             return CompanyListFragment()
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,15 +58,8 @@ class CompanyListFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val args = arguments
 
-
-        //マッチング済み会社リストの設定
-        matchingCompanyList = companyListFragmentPresenter.getMatchingCompanyList()
-        val companyListRecyclerView = view.findViewById<RecyclerView>(R.id.matching_company_list)
-        companyListRecyclerView.adapter = CompanyListAdapter(activity, matchingCompanyList, this)
-        companyListRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-
+        setMatchedCompanyRecyclerView()
 
         val button02 = view.findViewById<Button>(R.id.button_02)
         button02.setOnClickListener {
@@ -92,18 +86,31 @@ class CompanyListFragment : Fragment(),
 
     override fun onItemClick(view: View, position: Int) {
         Toast.makeText(activity, "${matchingCompanyList[position].name} がタップされた", Toast.LENGTH_LONG).show()
+
         val drawer = activity?.findViewById<DrawerLayout>(R.id.drawerLayout)
         drawer?.closeDrawer(GravityCompat.START)
+
         val intent = Intent(activity, MainActivity::class.java)
         intent.putExtra("companyId", matchingCompanyList[position].id)
         startActivity(intent)
         activity!!.finish()
     }
 
-    override fun showMatchingCompanyList(companies: List<Company>) {
-        val companyListRecyclerView = view!!.findViewById<RecyclerView>(R.id.matching_company_list)
-        companyListRecyclerView.adapter = CompanyListAdapter(activity, companies, this)
-        companyListRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-
+    //マッチング企業一覧のリスト表示（追加された時などは更新処理を行う）
+    override fun setMatchedCompany(companies: MutableList<Company>) {
+        matchingCompanyList.clear()
+        matchingCompanyList.addAll(companies)
+        Toast.makeText(activity, "$matchingCompanyList", Toast.LENGTH_LONG).show()
+        companyListRecyclerView.adapter.notifyDataSetChanged()
     }
+
+    //マッチング済み会社リストの設定
+    private fun setMatchedCompanyRecyclerView() {
+        companyListFragmentPresenter.getMatchedCompanyList()
+        companyListRecyclerView = view!!.findViewById<RecyclerView>(R.id.matching_company_list)
+        companyListRecyclerView.adapter = CompanyListAdapter(activity, matchingCompanyList, this)
+        companyListRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+    }
+
+
 }

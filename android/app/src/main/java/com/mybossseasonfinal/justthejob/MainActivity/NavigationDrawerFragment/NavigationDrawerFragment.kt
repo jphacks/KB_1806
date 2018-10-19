@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerFragmentComponent
 import com.mybossseasonfinal.justthejob.DI.Module.FragmentModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
@@ -28,16 +27,14 @@ class NavigationDrawerFragment : Fragment(),
     @Inject
     lateinit var navigationDrawerFragmentPresenter: NavigationDrawerFragmentPresenter
 
-    private lateinit var contentsList: MutableList<Content>
     private lateinit var textViewMatchingCompany: TextView
-    private var cnt = 0
+    private lateinit var contentsRecyclerView: RecyclerView
 
     companion object {
         fun createInstance(companyId: Int): NavigationDrawerFragment {
             val navigationDrawerFragment = NavigationDrawerFragment()
             val args = Bundle()
             args.putInt("CompanyId", companyId)
-//            args.putString("CompanyName",companyName)
             navigationDrawerFragment.arguments = args
             return navigationDrawerFragment
         }
@@ -65,17 +62,11 @@ class NavigationDrawerFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         val args = arguments
 
+        var contentsList = navigationDrawerFragmentPresenter.getContents()
+        viewSetting(view, contentsList)
 
-        //ここでCompanyIdからCompanyNameを掘ってくる
-        textViewMatchingCompany = view.findViewById<TextView>(R.id.textView_companyName)
+        navigationDrawerFragmentPresenter.getCompany(args!!.getInt("CompanyId"))
 
-        var company = navigationDrawerFragmentPresenter.getCompany(args!!.getInt("CompanyId"))
-
-
-        contentsList = navigationDrawerFragmentPresenter.getContents()
-        val contentsRecyclerView = view.findViewById<RecyclerView>(R.id.contents_list)
-        contentsRecyclerView.adapter = ContentsAdapter(activity!!.applicationContext, contentsList, this)
-        contentsRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
         val button01 = view.findViewById<Button>(R.id.button_01)
         button01.setOnClickListener {
@@ -101,12 +92,20 @@ class NavigationDrawerFragment : Fragment(),
     }
 
     override fun onItemClick(view: View, position: Int) {
-        Toast.makeText(activity, "${contentsList[position].name} がタップされた", Toast.LENGTH_LONG).show()
+//        Toast.makeText(activity, "${contentsList[position].name} がタップされた", Toast.LENGTH_LONG).show()
         val drawer = activity?.findViewById<DrawerLayout>(R.id.drawerLayout)
         drawer?.closeDrawer(GravityCompat.START)
     }
 
     override fun showCompanyName(companyName: String) {
         textViewMatchingCompany.text = companyName
+    }
+
+    private fun viewSetting(view: View, contentsList: MutableList<Content>) {
+        textViewMatchingCompany = view.findViewById<TextView>(R.id.textView_companyName)
+
+        contentsRecyclerView = view.findViewById<RecyclerView>(R.id.contents_list)
+        contentsRecyclerView.adapter = ContentsAdapter(activity!!.applicationContext, contentsList, this)
+        contentsRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
     }
 }
