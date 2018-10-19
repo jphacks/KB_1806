@@ -35,7 +35,10 @@ class ContentsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.let {
-            //            it.imageViewContentIcon =
+            when (contents[position].name) {
+
+            }
+            it.imageViewContentIcon.setImageResource(R.drawable.abc_ic_star_black_48dp)
             it.textViewContentName.text = contents[position].name
         }
     }
