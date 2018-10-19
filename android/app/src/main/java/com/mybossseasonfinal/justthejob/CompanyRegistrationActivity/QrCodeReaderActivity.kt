@@ -20,6 +20,10 @@ class QrCodeReaderActivity : AppCompatActivity() {
         setContentView(R.layout.activity_qrcode_reader)
 
         qrCodeReaderView = findViewById(R.id.barcodeView)
+    }
+
+    override fun onStart() {
+        super.onStart()
         qrCodeReaderView.decodeSingle(object : BarcodeCallback {
             override fun barcodeResult(barcodeResult: BarcodeResult) {
                 Log.d("readQR", barcodeResult.text)
@@ -33,14 +37,6 @@ class QrCodeReaderActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         qrCodeReaderView.resume()
-        qrCodeReaderView.decodeSingle(object : BarcodeCallback {
-            override fun barcodeResult(barcodeResult: BarcodeResult) {
-                Log.d("readQR", barcodeResult.text)
-                toCompanyRegistrationView(barcodeResult.text)
-            }
-
-            override fun possibleResultPoints(list: List<ResultPoint>) {}
-        })
     }
 
     override fun onPause() {
