@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -87,15 +88,6 @@ class NavigationDrawerFragment : Fragment(),
                 fragmentTransaction.commit()
             }
         }
-
-        //BackStackで一つ戻す
-        val pop1 = view.findViewById<Button>(R.id.pop_01)
-        pop1.setOnClickListener {
-            val fragmentManager = fragmentManager
-            if (fragmentManager != null) {
-                fragmentManager.popBackStack()
-            }
-        }
     }
 
     override fun onItemClick(view: View, position: Int) {
@@ -158,5 +150,7 @@ class NavigationDrawerFragment : Fragment(),
         contentsRecyclerView = view.findViewById<RecyclerView>(R.id.contents_list)
         contentsRecyclerView.adapter = ContentsAdapter(activity!!.applicationContext, contentsList, this)
         contentsRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        val itemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+        contentsRecyclerView.addItemDecoration(itemDecoration)
     }
 }

@@ -36,9 +36,15 @@ class ContentsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.let {
             when (contents[position].name) {
-
+                "エントリーシート" -> it.imageViewContentIcon.setImageResource(R.drawable.entry_sheet)
+                "Webテスト" -> it.imageViewContentIcon.setImageResource(R.drawable.web_test)
+                "社員図鑑" -> it.imageViewContentIcon.setImageResource(R.drawable.worker_illustration)
+                "専門用語図鑑" -> it.imageViewContentIcon.setImageResource(R.drawable.senmon)
+                "面接予約" -> it.imageViewContentIcon.setImageResource(R.drawable.interview_registration)
+                "Web面接" -> it.imageViewContentIcon.setImageResource(R.drawable.web_interview)
+                "コミュニティ" -> it.imageViewContentIcon.setImageResource(R.drawable.message)
             }
-            it.imageViewContentIcon.setImageResource(R.drawable.abc_ic_star_black_48dp)
+
             it.textViewContentName.text = contents[position].name
         }
     }
