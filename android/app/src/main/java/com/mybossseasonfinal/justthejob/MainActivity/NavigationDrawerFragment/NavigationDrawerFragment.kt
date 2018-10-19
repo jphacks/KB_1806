@@ -15,8 +15,12 @@ import com.mybossseasonfinal.justthejob.DI.Component.DaggerFragmentComponent
 import com.mybossseasonfinal.justthejob.DI.Module.FragmentModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
 import com.mybossseasonfinal.justthejob.MainActivity.CompanyListFragment.CompanyListFragment
-import com.mybossseasonfinal.justthejob.MainActivity.WebInterviewFragment.WebInterviewFragment
-import com.mybossseasonfinal.justthejob.MainActivity.WorkerIllustrationFragment.WorkerIllustrationFragment
+import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.ComunityFragment.ComunityFragment
+import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.EntrySheetFragment.EntrySheetFragment
+import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.InterviewReserveFragment.InterviewReserveFragment
+import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.WebInterviewFragment.WebInterviewFragment
+import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.WebTestFragment.WebTestFragment
+import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.WorkerIllustrationFragment.WorkerIllustrationFragment
 import com.mybossseasonfinal.justthejob.Models.Content
 import com.mybossseasonfinal.justthejob.R
 import javax.inject.Inject
@@ -103,14 +107,39 @@ class NavigationDrawerFragment : Fragment(),
             val fragmentTransaction = fragmentManager.beginTransaction()
 
             when (contentsList[position].name) {
-                "Web面接" -> {
+                "エントリーシート" -> {
                     fragmentTransaction.addToBackStack(null)
-                    fragmentTransaction.replace(R.id.mainFragmentContainer, WebInterviewFragment.createInstance())
+                    fragmentTransaction.replace(R.id.mainFragmentContainer, EntrySheetFragment.createInstance())
+                    fragmentTransaction.commit()
+                }
+                "Webテスト" -> {
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.replace(R.id.mainFragmentContainer, WebTestFragment.createInstance())
                     fragmentTransaction.commit()
                 }
                 "社員図鑑" -> {
                     fragmentTransaction.addToBackStack(null)
                     fragmentTransaction.replace(R.id.mainFragmentContainer, WorkerIllustrationFragment.createInstance())
+                    fragmentTransaction.commit()
+                }
+                "専門用語図鑑" -> {
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.replace(R.id.mainFragmentContainer, WebInterviewFragment.createInstance())
+                    fragmentTransaction.commit()
+                }
+                "面接予約" -> {
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.replace(R.id.mainFragmentContainer, InterviewReserveFragment.createInstance())
+                    fragmentTransaction.commit()
+                }
+                "Web面接" -> {
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.replace(R.id.mainFragmentContainer, WebInterviewFragment.createInstance())
+                    fragmentTransaction.commit()
+                }
+                "コミュニティ" -> {
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.replace(R.id.mainFragmentContainer, ComunityFragment.createInstance())
                     fragmentTransaction.commit()
                 }
             }
