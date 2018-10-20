@@ -150,6 +150,11 @@ router.get('/personality/:user_id', function(req, res, next) {
     getUserPersonality(req.params.user_id, res);
 });
 
+// ユーザとマッチする社員を検索
+router.get('/:user_id/matching/:company_id', function(req, res, next) {
+    getMatchingrEmployees(req.params.user_id, req.params.company_id, res);
+});
+
 // ユーザのMy企業に指定企業を保存
 function postUserCompany(user_id, company_id, res){
     // MongoDB へ 接続
@@ -271,4 +276,67 @@ function getUserPersonality(_id, res){
     });
   });
 };
+
+//ユーザとマッチする社員を検索
+function getMatchingrEmployees(_user_id,_company_id, res){
+  var matchingRate=[];
+  var count=0;
+  // MongoDB へ 接続
+  MongoClient.connect(url_db, (error, client) => {
+    const dbUsers = client.db('users');
+    // コレクションの取得
+    collectionPerIns = dbUsers.collection('Personality_Insights');
+    // ユーザの性格特性情報を取得
+    collectionPerIns.find({user_id:Number(_user_id)}).toArray((error, userIns)=>{
+        console.log(userIns[0].user_id,userIns[0].personality_insights.personality[0].percentile,userIns[0].personality_insights.personality[1].percentile);
+
+        const db = client.db('company');
+
+        // コレクションの取得
+        collectionEmp = db.collection('employees');
+        // コレクション中でユーザが登録している会社の社員情報一覧を取得
+        collectionEmp.find({company_id:Number(_company_id)}).toArray((error, documentsEmp)=>{
+          for (var j = 0 ; j < documentsEmp.length ; j++) {
+            console.log(documentsEmp[j].id,documentsEmp[j].name,documentsEmp[j].company_id);
+
+            // ユーザが登録している企業の社員の性格特性情報を取得
+            collectionEmpIns = db.collection('employees_insights');
+            collectionEmpIns.find({employee_id:Number(documentsEmp[j].id)}).toArray((error, employeeIns)=>{
+                if(employeeIns[0] != null){
+                  console.log("employeeIns",employeeIns[0].employee_id,employeeIns[0].personality_insights.personality[0].percentile,employeeIns[0].personality_insights.personality[1].percentile);
+                  var sumRate=0;
+                  for(var i = 0; i<employeeIns[0].personality_insights.personality.length; i++){
+                    sumRate += Math.abs(employeeIns[0].personality_insights.personality[i].percentile - userIns[0].personality_insights.personality[i].percentile);
+                    console.log("sumRate",sumRate);
+                  }
+                  matchingRate.push({
+                    "employee_id":employeeIns[0].employee_id,
+                    "matching_rate":(employeeIns[0].personality_insights.personality.length - sumRate)/employeeIns[0].personality_insights.personality.length
+                  });
+                }
+
+                if(j == documentsEmp.length){
+                  count++;
+                  if(count == documentsEmp.length){
+                    //マッチング度でソートし一番マッチしている社員を返す
+                    var sortedMatchingRate = matchingRate.sort(compare);
+                    console.log("matchingRate",sortedMatchingRate);
+                    res.json(sortedMatchingRate[0]);
+                  }
+                }
+            });
+
+          }
+        });
+     });
+  });
+};
+//. 比較関数
+function compare( a, b ){
+  var r = 0;
+  if( a.matching_rate > b.matching_rate ){ r = -1; }
+  else if( a.matching_rate < b.matching_rate ){ r = 1; }
+
+  return r;
+}
 module.exports = router;
