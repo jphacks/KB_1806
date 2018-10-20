@@ -21,16 +21,19 @@ import com.mybossseasonfinal.justthejob.MainActivity.CompanyListFragment.Company
 import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.ComunityFragment.ComunityFragment
 import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.EntrySheetFragment.EntrySheetFragment
 import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.InterviewReserveFragment.InterviewReserveFragment
+import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.TerminologyFragment.TerminologyFragment
 import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.WebInterviewFragment.WebInterviewFragment
 import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.WebTestFragment.WebTestFragment
 import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.WorkerIllustrationFragment.WorkerIllustrationFragment
+import com.mybossseasonfinal.justthejob.Models.Comunity
 import com.mybossseasonfinal.justthejob.Models.Content
 import com.mybossseasonfinal.justthejob.R
 import javax.inject.Inject
 
 class NavigationDrawerFragment : Fragment(),
         NavigationDrawerFragmentContract.View,
-        ContentsAdapter.ViewHolder.ItemClickListener {
+        ContentsAdapter.ViewHolder.ItemClickListener,
+        ComunitiesAdapter.ViewHolder.ItemClickListener {
 
 
     @Inject
@@ -39,6 +42,7 @@ class NavigationDrawerFragment : Fragment(),
     private lateinit var textViewMatchingCompany: TextView
     private lateinit var imageViewCompanyLogo: ImageView
     private lateinit var contentsRecyclerView: RecyclerView
+    private lateinit var comunitiesRecyclerView: RecyclerView
     private lateinit var contentsList: MutableList<Content>
 
     companion object {
@@ -94,9 +98,6 @@ class NavigationDrawerFragment : Fragment(),
     }
 
     override fun onItemClick(view: View, position: Int) {
-//        Toast.makeText(activity, "${contentsList[position].name} がタップされた", Toast.LENGTH_LONG).show()
-
-
         val fragmentManager = fragmentManager
         if (fragmentManager != null) {
             val fragmentTransaction = fragmentManager.beginTransaction()
@@ -119,7 +120,7 @@ class NavigationDrawerFragment : Fragment(),
                 }
                 "専門用語図鑑" -> {
                     fragmentTransaction.addToBackStack(null)
-                    fragmentTransaction.replace(R.id.mainFragmentContainer, WebInterviewFragment.createInstance())
+                    fragmentTransaction.replace(R.id.mainFragmentContainer, TerminologyFragment.createInstance())
                     fragmentTransaction.commit()
                 }
                 "面接予約" -> {
@@ -132,13 +133,19 @@ class NavigationDrawerFragment : Fragment(),
                     fragmentTransaction.replace(R.id.mainFragmentContainer, WebInterviewFragment.createInstance())
                     fragmentTransaction.commit()
                 }
-                "コミュニティ" -> {
-                    fragmentTransaction.addToBackStack(null)
-                    fragmentTransaction.replace(R.id.mainFragmentContainer, ComunityFragment.createInstance())
-                    fragmentTransaction.commit()
-                }
             }
         }
+        val drawer = activity?.findViewById<DrawerLayout>(R.id.drawerLayout)
+        drawer?.closeDrawer(GravityCompat.START)
+    }
+
+    override fun onComunityClick(view: View, position: Int) {
+        val fragmentManager = fragmentManager
+        val fragmentTransaction = fragmentManager!!.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.replace(R.id.mainFragmentContainer, ComunityFragment.createInstance(roomId = position))
+        fragmentTransaction.commit()
+
         val drawer = activity?.findViewById<DrawerLayout>(R.id.drawerLayout)
         drawer?.closeDrawer(GravityCompat.START)
     }
@@ -160,5 +167,24 @@ class NavigationDrawerFragment : Fragment(),
         contentsRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         val itemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         contentsRecyclerView.addItemDecoration(itemDecoration)
+
+        comunitiesRecyclerView = view.findViewById<RecyclerView>(R.id.comunity_list)
+        comunitiesRecyclerView.adapter = ComunitiesAdapter(
+                activity!!.applicationContext,
+                comunities = mutableListOf(
+                        Comunity(name = "インターン", roomId = 0),
+                        Comunity(name = "インターン3班", roomId = 1),
+                        Comunity(name = "My boss season Final", roomId = 2),
+                        Comunity(name = "内定者全体", roomId = 3),
+                        Comunity(name = "内定者関西組", roomId = 4),
+                        Comunity(name = "社員Aさん", roomId = 5),
+                        Comunity(name = "社員Bさん", roomId = 6),
+                        Comunity(name = "社員Cさん", roomId = 7)),
+                comunityItemClickListener = this
+        )
+        comunitiesRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        comunitiesRecyclerView.addItemDecoration(itemDecoration)
+
+
     }
 }

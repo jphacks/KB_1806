@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerFragmentComponent
 import com.mybossseasonfinal.justthejob.DI.Module.FragmentModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
@@ -77,7 +76,7 @@ class CompanyListFragment : Fragment(),
     }
 
     override fun onItemClick(view: View, position: Int) {
-        Toast.makeText(activity, "${matchingCompanyList[position].name} がタップされた", Toast.LENGTH_LONG).show()
+//        Toast.makeText(activity, "${matchingCompanyList[position].name} がタップされた", Toast.LENGTH_LONG).show()
 
         val drawer = activity?.findViewById<DrawerLayout>(R.id.drawerLayout)
         drawer?.closeDrawer(GravityCompat.START)
@@ -92,7 +91,7 @@ class CompanyListFragment : Fragment(),
     override fun setMatchedCompany(companies: MutableList<Company>) {
         matchingCompanyList.clear()
         matchingCompanyList.addAll(companies)
-        Toast.makeText(activity, "$matchingCompanyList", Toast.LENGTH_LONG).show()
+//        Toast.makeText(activity, "$matchingCompanyList", Toast.LENGTH_LONG).show()
         companyListRecyclerView.adapter.notifyDataSetChanged()
     }
 

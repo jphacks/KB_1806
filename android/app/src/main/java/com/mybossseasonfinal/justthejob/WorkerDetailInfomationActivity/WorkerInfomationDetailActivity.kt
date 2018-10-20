@@ -63,7 +63,7 @@ class WorkerInfomationDetailActivity : AppCompatActivity(), WorkerInfomationDeta
 
     override fun setWorkerInfomation(worker: Worker) {
         Glide.with(this).load(worker.img_path).into(imageViewWorkerPhoto)
-        textViewWorkerName.text = worker.name
+        textViewWorkerName.text = "${worker.name}さん（${worker.age}）"
         textViewWorkerDepartment.text = "${worker.position}所属"
         textViewYear.text = "${worker.join_company}年入社　入社${worker.working_length}年目"
         textViewSelfIntroduction.text = "${worker.self_introduction}"

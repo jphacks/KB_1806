@@ -42,7 +42,6 @@ class ContentsAdapter(
                 "専門用語図鑑" -> it.imageViewContentIcon.setImageResource(R.drawable.senmon)
                 "面接予約" -> it.imageViewContentIcon.setImageResource(R.drawable.interview_registration)
                 "Web面接" -> it.imageViewContentIcon.setImageResource(R.drawable.web_interview)
-                "コミュニティ" -> it.imageViewContentIcon.setImageResource(R.drawable.message)
             }
 
             it.textViewContentName.text = contents[position].name
