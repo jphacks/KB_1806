@@ -46,7 +46,7 @@ class MatchingRequestCompleteActivity : AppCompatActivity(), MatchingRequestComp
         textViewCompleteMessage = findViewById(R.id.textView_complete_message)
 
         Glide.with(this).load(img).into(imageView)
-        textViewCompleteMessage.text = "${name}さんに\n交流申請しました！！！"
+        textViewCompleteMessage.text = "${name}さん\nマッチング申請しました！"
 
         val buttonBackWorkerIllustration = findViewById<Button>(R.id.button_back)
         buttonBackWorkerIllustration.setOnClickListener {

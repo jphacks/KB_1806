@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:textColor="#000"
-        android:text="# コミュニティ" />
+        android:paddingStart="10dp"
+        android:text="# コミュニティ"
+        android:textColor="#000" />
 </LinearLayout>
