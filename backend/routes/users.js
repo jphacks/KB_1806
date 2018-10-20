@@ -103,10 +103,31 @@ router.get('/:userID', function(req, res, next) {
 router.post('/company', function(req, res, next) {
     postUserCompany(req.body.user_id, req.body.company_id, res);
 });
-
+/**
+ * @swagger
+ * /users/personality:
+ *   post:
+ *     summary: Watson Personality Insightsでユーザの性格特性を取得
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user_id
+ *         in: formData
+ *         required: true
+ *         dataType: integer
+ *         description: ユーザID
+ *       - name: content
+ *         in: formData
+ *         required: true
+ *         dataType: integer
+ *         description: Personality Insightsで解析してほしいテキスト※100文字以上
+ *     responses:
+ *       200:
+ *         description: add
+ */
 // ユーザの性格特性の結果を返すAPI
-router.post('/personality/:user_id', function(req, res, next) {
-    postUserUserPersonality(req.params.user_id, req.body.content, res);
+router.post('/personality', function(req, res, next) {
+    postUserUserPersonality(req.body, res);
 });
 
 // ユーザのMy企業に指定企業を保存
@@ -165,10 +186,10 @@ function getCompanyList(_id, dbName, collection, res){
   });
 };
 // ユーザのMy企業に指定企業を保存
-function postUserUserPersonality(user_id, _content, res){
+function postUserUserPersonality(body, res){
   personalityInsights.profile(
     {
-      content: _content,
+      content: body.content,
       content_type: 'text/plain',
       consumption_preferences: true,
       content_language:'ja'
@@ -186,12 +207,28 @@ function postUserUserPersonality(user_id, _content, res){
 
             // コレクションの取得
             collection = db.collection('Personality_Insights');
-            collection.insertOne({
-                'user_id': Number(user_id),
-                'personality_insights': response
+            collection.find({user_id: Number(body.user_id)}).toArray((error, documents)=>{
+                if(documents[0] != null){
+                  // 条件に合致するドキュメントをすべて更新
+                  collection.updateMany(
+                    { user_id: Number(body.user_id) },
+                    { $set: {
+                      'personality_insights': response
+                     } },
+                    (error, result) => {
+                        client.close();
+                    });
+                }
+                else{
+                  //新規登録
+                  collection.insertOne({
+                      'user_id': Number(body.user_id),
+                      'personality_insights': response
 
-            }, (error, result) => {
-                client.close();
+                  }, (error, result) => {
+                      client.close();
+                  });
+                }
             });
         });
       }

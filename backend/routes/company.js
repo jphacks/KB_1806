@@ -139,7 +139,7 @@ router.get('/:id', function(req, res, next) {
   *               type: string
   *               example: 映画鑑賞しています．
   *               description: 休日の過ごし方
-  *             imp_path:
+  *             img_path:
   *               type: string
   *               example: https://s3-ap-northeast-1.amazonaws.com/jphacks2018.images/doshisha_logo.jpg
   *               description: ロゴの保存先のURL
@@ -243,11 +243,126 @@ router.get('/:id/employees/:emp_id', function(req, res, next) {
     getEnproyeeInfo(req.params.id,req.params.emp_id,"company", "employees", res);
 });
 
+/**
+ * @swagger
+ * /company/setEmployee:
+ *   post:
+ *     tags:
+ *       - company
+ *     summary: データベースに社員情報を登録
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *            -  name: id
+ *               in: formData
+ *               type: integer
+ *               format: int32
+ *               example: 1
+ *               description: 社員ID
+ *            -  name: company_id
+ *               in: formData
+ *               type: integer
+ *               format: int32
+ *               example: 1
+ *               description: 企業ID
+ *            -  name: name
+ *               in: formData
+ *               type: string
+ *               example: 同志社太郎
+ *               description: 名前
+ *            -  name: age
+ *               in: formData
+ *               type: integer
+ *               format: int32
+ *               example: 30
+ *               description: 年齢
+ *            -  name: position
+ *               in: formData
+ *               type: string
+ *               example: 理工学研究科情報工学専攻
+ *               description: 所属
+ *            -  name: join_company
+ *               in: formData
+ *               type: integer
+ *               format: int32
+ *               example: 2018
+ *               description: 入社年
+ *            -  name: working_length
+ *               in: formData
+ *               type: integer
+ *               format: int32
+ *               example: 6
+ *               description: 勤務年数
+ *            -  name: self_introduction
+ *               in: formData
+ *               type: string
+ *               example: よろしくお願いします．
+ *               description: 自己紹介
+ *            -  name: business_outline
+ *               in: formData
+ *               type: string
+ *               example: Webページの設計
+ *               description: 業務内容
+ *            -  name: holiday
+ *               in: formData
+ *               type: string
+ *               example: 映画鑑賞しています．
+ *               description: 休日の過ごし方
+ *            -  name: img_path
+ *               in: formData
+ *               type: string
+ *               example: https://s3-ap-northeast-1.amazonaws.com/jphacks2018.images/doshisha_logo.jpg
+ *               description: ロゴの保存先のURL
+ *     responses:
+ *       200:
+ *         description: add
+ */
+
 //データベースに社員情報を登録
 router.post('/setEmployee', function(req, res, next) {
     postSetEmployee(req.body, res);
 });
 
+/**
+ * @swagger
+ * /company/setCompany:
+ *   post:
+ *     tags:
+ *       - company
+ *     summary: データベースに企業情報を登録
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *            -  name: company_id
+ *               type: integer
+ *               format: int32
+ *               in: formData
+ *               example: 1
+ *               description: 企業ID
+ *            -  name: name
+ *               in: formData
+ *               example: 同志社大学
+ *               description: 企業名
+ *            -  name: founder
+ *               in: formData
+ *               example: 新島襄
+ *               description: 創設者
+ *            -  name: founding
+ *               in: formData
+ *               example: s23/03/25
+ *               description: 創立年月日
+ *            -  name: address
+ *               in: formData
+ *               example: 京都府京都市上京区今出川通烏丸東入玄武町６０１
+ *               description: 住所
+ *            -  name: img_path
+ *               in: formData
+ *               example: https://s3-ap-northeast-1.amazonaws.com/jphacks2018.images/doshisha_logo.jpg
+ *               description: ロゴの保存先のURL
+ *     responses:
+ *       200:
+ *         description: add
+ */
 //データベースに企業情報を登録
 router.post('/setCompany', function(req, res, next) {
     postSetCompany(req.body, res);
@@ -312,24 +427,46 @@ function postSetCompany(body, res){
 
         // コレクションの取得
         collection = db.collection('info');
-        collection.insertOne({
-            "id": Number(body.id),
-            "name": body.name,
-            "founder": body.founder,
-            "founding": body.founding,
-            "address": body.address,
-            "img_path":body.img_path
 
-        }, (error, result) => {
-            client.close();
-        });
-        res.json({
-            "id": body.id,
-            "name": body.name,
-            "founder": body.founder,
-            "founding": body.founding,
-            "address": body.address,
-            "img_path":body.img_path
+
+        collection.find({id: Number(body.id)}).toArray((error, documents)=>{
+            if(documents[0] != null){
+              // 条件に合致するドキュメントをすべて更新
+              collection.updateMany(
+                  { id: Number(body.id) },
+                  { $set: {
+                    "name": body.name,
+                    "founder": body.founder,
+                    "founding": body.founding,
+                    "address": body.address,
+                    "img_path":body.img_path
+                   } },
+                  (error, result) => {
+                      client.close();
+                  });
+            }
+            else{
+              //新規登録
+              collection.insertOne({
+                  "id": Number(body.id),
+                  "name": body.name,
+                  "founder": body.founder,
+                  "founding": body.founding,
+                  "address": body.address,
+                  "img_path":body.img_path
+
+              }, (error, result) => {
+                  client.close();
+              });
+            }
+            res.json({
+                "id": body.id,
+                "name": body.name,
+                "founder": body.founder,
+                "founding": body.founding,
+                "address": body.address,
+                "img_path":body.img_path
+            });
         });
     });
 };
@@ -341,7 +478,46 @@ function postSetEmployee(body, res){
 
         // コレクションの取得
         collection = db.collection('employees');
-        collection.insertOne({
+        collection.find({id: Number(body.id)}).toArray((error, documents)=>{
+            if(documents[0] != null){
+              //社員情報更新
+              collection.updateMany(
+                  { id: Number(body.id) },
+                  { $set: {
+                    "name": body.name,
+                    "company_id": Number(body.company_id),
+                    "age": Number(body.age),
+                    "position": body.position,
+                    "join_company": Number(body.join_company),
+                    "working_length": Number(body.working_length),
+                    "self_introduction": body.self_introduction,
+                    "business_outline": body.business_outline,
+                    "holiday": body.holiday,
+                    "img_path":body.img_path
+                   } },
+                   (error, result) => {
+                      client.close();
+                  });
+            }
+            else{
+              //新規社員登録
+                collection.insertOne({
+                    "id": Number(body.id),
+                    "name": body.name,
+                    "company_id": Number(body.company_id),
+                    "age": Number(body.age),
+                    "position": body.position,
+                    "join_company": Number(body.join_company),
+                    "working_length": Number(body.working_length),
+                    "self_introduction": body.self_introduction,
+                    "business_outline": body.business_outline,
+                    "holiday": body.holiday,
+                    "img_path":body.img_path
+                }, (error, result) => {
+                    client.close();
+                });
+            }
+          res.json({
             "id": Number(body.id),
             "name": body.name,
             "company_id": Number(body.company_id),
@@ -353,69 +529,9 @@ function postSetEmployee(body, res){
             "business_outline": body.business_outline,
             "holiday": body.holiday,
             "img_path":body.img_path
-        }, (error, result) => {
-            client.close();
-        });
-        res.json({
-          "id": Number(body.id),
-          "name": body.name,
-          "company_id": Number(body.company_id),
-          "age": Number(body.age),
-          "position": body.position,
-          "join_company": Number(body.join_company),
-          "working_length": Number(body.working_length),
-          "self_introduction": body.self_introduction,
-          "business_outline": body.business_outline,
-          "holiday": body.holiday,
-          "img_path":body.img_path
+          });
         });
     });
 };
-// MongoDB へ 接続
-/*MongoClient.connect(url_db, (error, client) => {
-    var collection;
-    const db = client.db('company');
 
-    // コレクションの取得
-    collection = db.collection("info");
-
-    // コレクションにドキュメントを挿入
-    collection.insertOne({
-        "id": 2,
-        "name": "早稲田大学",
-        "founder": "大隈重信",
-        "founding": "s24/02/21",
-        "address": "東京都新宿区西早稲田１－６－１",
-        "img_path":"https://s3-ap-northeast-1.amazonaws.com/jphacks2018.images/akanda_prof.jpg"
-
-    }, (error, result) => {
-        client.close();
-    });
-});
-*/
-/*MongoClient.connect(url_db, (error, client) => {
-    var collection;
-    const db = client.db('company');
-
-    // コレクションの取得
-    collection = db.collection("employees");
-
-    // コレクションにドキュメントを挿入
-    collection.insertOne({
-        "id": 2,
-        "name": "神田章博",
-        "company_id": 1,
-        "age": 23,
-        "position": "理工学研究科情報工学専攻",
-        "join_company": 2018,
-        "working_length": 1,
-        "self_introduction": "時代屋でバイトしてます．よろしくお願いします．",
-        "business_outline": "知的照明システムの研究開発を行っています",
-        "holiday": "海外ドラマ（ウォーキングデッド）を見てます．",
-        "img_path":"https://s3-ap-northeast-1.amazonaws.com/jphacks2018.images/akanda_prof.jpg"
-    }, (error, result) => {
-        client.close();
-    });
-});
-*/
 module.exports = router;
