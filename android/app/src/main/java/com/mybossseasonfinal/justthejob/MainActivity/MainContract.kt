@@ -7,6 +7,6 @@ interface MainContract {
 
     interface Presenter {
         fun apiRequest(): Unit
-        fun apiPost(): Unit
+//        fun apiPost(): Unit
     }
 }

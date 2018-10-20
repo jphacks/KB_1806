@@ -44,6 +44,7 @@ class NavigationDrawerFragment : Fragment(),
     private lateinit var contentsRecyclerView: RecyclerView
     private lateinit var comunitiesRecyclerView: RecyclerView
     private lateinit var contentsList: MutableList<Content>
+    private var companyName = ""
 
     companion object {
         fun createInstance(companyId: Int): NavigationDrawerFragment {
@@ -105,7 +106,7 @@ class NavigationDrawerFragment : Fragment(),
             when (contentsList[position].name) {
                 "エントリーシート" -> {
                     fragmentTransaction.addToBackStack(null)
-                    fragmentTransaction.replace(R.id.mainFragmentContainer, EntrySheetFragment.createInstance())
+                    fragmentTransaction.replace(R.id.mainFragmentContainer, EntrySheetFragment.createInstance(arguments!!.getInt("CompanyId")))
                     fragmentTransaction.commit()
                 }
                 "Webテスト" -> {

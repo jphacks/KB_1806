@@ -84,7 +84,7 @@ class CompanyRegistrationActivity : AppCompatActivity(), CompanyRegistrationCont
         AlertDialog.Builder(this)
                 .setTitle("『 ${companyInfo.name} 』を\nMy企業として登録しました")
                 .setPositiveButton("OK") { dialog, which ->
-                    companyRegistrationPresenter.postUsersCompany(100, companyInfo.id)
+                    companyRegistrationPresenter.postUsersCompany(1, companyInfo.id)
                     toMainView()
                 }.show()
     }

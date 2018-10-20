@@ -42,7 +42,7 @@ class MatchingRequestCompleteActivity : AppCompatActivity(), MatchingRequestComp
         val img = intent.getStringExtra("img")
         val companyId = intent.getIntExtra("companyId", 0)
 
-        imageView = findViewById(R.id.imageView)
+        imageView = findViewById(R.id.imageView_worker)
         textViewCompleteMessage = findViewById(R.id.textView_complete_message)
 
         Glide.with(this).load(img).into(imageView)

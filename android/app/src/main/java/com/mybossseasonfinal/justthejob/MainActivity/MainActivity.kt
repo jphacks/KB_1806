@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
                 .build()
                 .inject(this)
 
-        mainPresenter.apiPost()
+//        mainPresenter.apiPost()
 
         //Toolbar
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
