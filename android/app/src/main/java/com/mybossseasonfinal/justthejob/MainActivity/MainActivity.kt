@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
             companyId = intent.getIntExtra("companyId", 0)
 
             navigationDrawerTransaction.replace(R.id.navigationDrawerFragmentContainer, NavigationDrawerFragment.createInstance(companyId))
-            mainFieldTransaction.replace(R.id.mainFragmentContainer, WorkerIllustrationFragment.createInstance())
+            mainFieldTransaction.replace(R.id.mainFragmentContainer, WorkerIllustrationFragment.createInstance(companyId))
 
             navigationDrawerTransaction.commit()
             mainFieldTransaction.commit()

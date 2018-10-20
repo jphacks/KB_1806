@@ -1,5 +1,6 @@
 package com.mybossseasonfinal.justthejob.MainActivity.MainFragment.WorkerIllustrationFragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -13,6 +14,7 @@ import com.mybossseasonfinal.justthejob.DI.Module.FragmentModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
 import com.mybossseasonfinal.justthejob.Models.Worker
 import com.mybossseasonfinal.justthejob.R
+import com.mybossseasonfinal.justthejob.WorkerDetailInfomationActivity.WorkerInfomationDetailActivity
 import javax.inject.Inject
 
 class WorkerIllustrationFragment : Fragment(),
@@ -24,7 +26,9 @@ class WorkerIllustrationFragment : Fragment(),
     lateinit var workerIllustrationFragmentPresenter: WorkerIllustrationFragmentPresenter
 
     private lateinit var workerListRecyclerView: RecyclerView
+
     private var workers: MutableList<Worker> = mutableListOf()
+    private var companyId = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,13 +48,18 @@ class WorkerIllustrationFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val args = arguments
 
-        setWorkersRecyclerView()
+        setWorkersRecyclerView(args)
     }
 
     override fun onItemClick(view: View, position: Int) {
         val workerName = workers[position].name
-        Toast.makeText(activity, "$workerName さんがタップ", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, "$workerName さんをタップ", Toast.LENGTH_LONG).show()
+        val intent = Intent(activity, WorkerInfomationDetailActivity::class.java)
+        intent.putExtra("workerId", workers[position].id)
+        intent.putExtra("companyId", companyId)
+        startActivity(intent)
     }
 
     override fun setWorkers(workers: MutableList<Worker>) {
@@ -59,8 +68,8 @@ class WorkerIllustrationFragment : Fragment(),
         workerListRecyclerView.adapter.notifyDataSetChanged()
     }
 
-    private fun setWorkersRecyclerView() {
-        val companyId = 1
+    private fun setWorkersRecyclerView(args: Bundle?) {
+        companyId = args!!.getInt("CompanyId")
         workerIllustrationFragmentPresenter.getWorkers(companyId)
         workerListRecyclerView = view!!.findViewById<RecyclerView>(R.id.worker_recycler)
         workerListRecyclerView.adapter = WorkerIllustrationAdapter(activity, workers, this)
@@ -69,8 +78,12 @@ class WorkerIllustrationFragment : Fragment(),
 
 
     companion object {
-        fun createInstance(): WorkerIllustrationFragment {
-            return WorkerIllustrationFragment()
+        fun createInstance(companyId: Int): WorkerIllustrationFragment {
+            val workerIllustrationFragment = WorkerIllustrationFragment()
+            val args = Bundle()
+            args.putInt("CompanyId", companyId)
+            workerIllustrationFragment.arguments = args
+            return workerIllustrationFragment
         }
     }
 }

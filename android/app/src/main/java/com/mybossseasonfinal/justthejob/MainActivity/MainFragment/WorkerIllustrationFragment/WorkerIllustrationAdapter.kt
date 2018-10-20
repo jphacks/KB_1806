@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.mybossseasonfinal.justthejob.Models.Worker
 import com.mybossseasonfinal.justthejob.R
 
@@ -35,6 +36,7 @@ class WorkerIllustrationAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.let {
+            Glide.with(it.imageViewWorkerPhoto.context).load(workers[position].img_path).into(it.imageViewWorkerPhoto)
             it.textViewWorkerName.text = workers[position].name
         }
     }
