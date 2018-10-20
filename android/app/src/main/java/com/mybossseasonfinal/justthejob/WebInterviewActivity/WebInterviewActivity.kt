@@ -180,9 +180,9 @@ class WebInterviewActivity : AppCompatActivity() {
             val btnAction = findViewById<View>(R.id.btnAction) as Button
             if (null != btnAction) {
                 if (false == _bConnected) {
-                    btnAction.text = "通話開始"
+                    btnAction.setBackgroundResource(R.drawable.skyway_call_squire)
                 } else {
-                    btnAction.text = "通話終了"
+                    btnAction.setBackgroundResource(R.drawable.skyway_tell_squire)
                 }
             }
         }
