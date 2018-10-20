@@ -2,6 +2,14 @@ var express = require('express');
 var router = express.Router();
 var MongoClient = require("mongodb").MongoClient;
 var url_db = 'mongodb://localhost:27017/company'
+var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
+//watson personalityInsights Authentication
+var personalityInsights = new PersonalityInsightsV3({
+  username: '0f304f75-c6ff-44d2-9e02-8ad625f0f14b',
+  password: 'qpuQkhIbhTsy',
+  version: '2016-10-19',
+  url: 'https://gateway.watsonplatform.net/personality-insights/api'
+});
 
 /**
  * @swagger
@@ -96,6 +104,11 @@ router.post('/company', function(req, res, next) {
     postUserCompany(req.body.user_id, req.body.company_id, res);
 });
 
+// ユーザの性格特性の結果を返すAPI
+router.post('/personality/:user_id', function(req, res, next) {
+    postUserUserPersonality(req.params.user_id, req.body.content, res);
+});
+
 // ユーザのMy企業に指定企業を保存
 function postUserCompany(user_id, company_id, res){
     // MongoDB へ 接続
@@ -150,6 +163,40 @@ function getCompanyList(_id, dbName, collection, res){
       else res.send("error:このユーザは企業を登録していない，または存在しないユーザです");
     });
   });
+};
+// ユーザのMy企業に指定企業を保存
+function postUserUserPersonality(user_id, _content, res){
+  personalityInsights.profile(
+    {
+      content: _content,
+      content_type: 'text/plain',
+      consumption_preferences: true,
+      content_language:'ja'
+    },
+    function(err, response) {
+      if (err) {
+        console.log('error:', err);
+      } else {
+        console.log(JSON.stringify(response, null, 2));
+        res.json(response);
+
+        // MongoDB へ Personality_Insightsの結果を格納
+        MongoClient.connect(url_db, (error, client) => {
+            const db = client.db('users');
+
+            // コレクションの取得
+            collection = db.collection('Personality_Insights');
+            collection.insertOne({
+                'user_id': Number(user_id),
+                'personality_insights': response
+
+            }, (error, result) => {
+                client.close();
+            });
+        });
+      }
+    }
+  );
 };
 
 module.exports = router;

@@ -243,6 +243,15 @@ router.get('/:id/employees/:emp_id', function(req, res, next) {
     getEnproyeeInfo(req.params.id,req.params.emp_id,"company", "employees", res);
 });
 
+//データベースに社員情報を登録
+router.post('/setEmployee', function(req, res, next) {
+    postSetEmployee(req.body, res);
+});
+
+//データベースに企業情報を登録
+router.post('/setCompany', function(req, res, next) {
+    postSetCompany(req.body, res);
+});
 
 
 //会社情報取得
@@ -295,7 +304,73 @@ function getEnproyeeInfo(_id, emp_id,dbName, collection, res){
   });
 };
 
+//企業情報をデータベースに登録
+function postSetCompany(body, res){
+    // MongoDB へ 接続
+    MongoClient.connect(url_db, (error, client) => {
+        const db = client.db('company');
 
+        // コレクションの取得
+        collection = db.collection('info');
+        collection.insertOne({
+            "id": Number(body.id),
+            "name": body.name,
+            "founder": body.founder,
+            "founding": body.founding,
+            "address": body.address,
+            "img_path":body.img_path
+
+        }, (error, result) => {
+            client.close();
+        });
+        res.json({
+            "id": body.id,
+            "name": body.name,
+            "founder": body.founder,
+            "founding": body.founding,
+            "address": body.address,
+            "img_path":body.img_path
+        });
+    });
+};
+//社員情報をデータベースに登録
+function postSetEmployee(body, res){
+    // MongoDB へ 接続
+    MongoClient.connect(url_db, (error, client) => {
+        const db = client.db('company');
+
+        // コレクションの取得
+        collection = db.collection('employees');
+        collection.insertOne({
+            "id": Number(body.id),
+            "name": body.name,
+            "company_id": Number(body.company_id),
+            "age": Number(body.age),
+            "position": body.position,
+            "join_company": Number(body.join_company),
+            "working_length": Number(body.working_length),
+            "self_introduction": body.self_introduction,
+            "business_outline": body.business_outline,
+            "holiday": body.holiday,
+            "img_path":body.img_path
+        }, (error, result) => {
+            client.close();
+        });
+        res.json({
+          "id": Number(body.id),
+          "name": body.name,
+          "company_id": Number(body.company_id),
+          "age": Number(body.age),
+          "position": body.position,
+          "join_company": Number(body.join_company),
+          "working_length": Number(body.working_length),
+          "self_introduction": body.self_introduction,
+          "business_outline": body.business_outline,
+          "holiday": body.holiday,
+          "img_path":body.img_path
+        });
+    });
+};
 // MongoDB へ 接続
 /*MongoClient.connect(url_db, (error, client) => {
     var collection;
