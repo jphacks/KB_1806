@@ -78,6 +78,10 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
 //        Toast.makeText(this, "現在表示中企業のCompanyID：$companyId", Toast.LENGTH_LONG).show()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.options, menu)
         return true

@@ -28,9 +28,10 @@ class MatchingByEntrySheetCompleteActivity : AppCompatActivity(), MatchingByEntr
 
     private var content = ""
     private var userId = 1
-    var name = "神田 章博"
-    var imgUrl = "https://s3-ap-northeast-1.amazonaws.com/jphacks2018.images/akanda_prof.jpg"
-    var companyId = 1
+    private lateinit var name: String
+    private lateinit var imgUrl: String
+
+    var companyId = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
