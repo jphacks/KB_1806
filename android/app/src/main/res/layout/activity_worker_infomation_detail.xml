@@ -38,7 +38,7 @@
                 android:id="@+id/imageView_worker_photo_big"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/worker_illustration" />
+                tools:srcCompat="@drawable/worker_illustration" />
         </FrameLayout>
 
         <LinearLayout
@@ -52,19 +52,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="社員太郎" />
+                tools:text="社員太郎" />
 
             <TextView
                 android:id="@+id/textView_worker_department"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="人事部採用課技術採用グループ所属" />
+                tools:text="人事部採用課技術採用グループ所属" />
 
             <TextView
                 android:id="@+id/textView_year"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2015年入社　入社3年目" />
+                tools:text="2015年入社　入社3年目" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -77,7 +77,7 @@
                 android:id="@+id/textView_self_introduction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                tools:text="TextView" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -90,7 +90,7 @@
                 android:id="@+id/textView_work_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                tools:text="TextView" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -103,7 +103,7 @@
                 android:id="@+id/textView_holiday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                tools:text="TextView" />
         </LinearLayout>
 
     </LinearLayout>

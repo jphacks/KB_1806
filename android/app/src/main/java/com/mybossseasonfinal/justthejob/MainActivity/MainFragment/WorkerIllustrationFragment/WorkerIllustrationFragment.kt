@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerFragmentComponent
 import com.mybossseasonfinal.justthejob.DI.Module.FragmentModule
 import com.mybossseasonfinal.justthejob.JustTheJobApp
@@ -55,7 +54,7 @@ class WorkerIllustrationFragment : Fragment(),
 
     override fun onItemClick(view: View, position: Int) {
         val workerName = workers[position].name
-        Toast.makeText(activity, "$workerName さんをタップ", Toast.LENGTH_LONG).show()
+//        Toast.makeText(activity, "$workerName さんをタップ", Toast.LENGTH_LONG).show()
         val intent = Intent(activity, WorkerInfomationDetailActivity::class.java)
         intent.putExtra("workerId", workers[position].id)
         intent.putExtra("companyId", companyId)

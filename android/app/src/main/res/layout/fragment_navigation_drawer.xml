@@ -57,6 +57,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:text="コミュニティ" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/comunity_list"
                 android:layout_width="match_parent"
