@@ -20,8 +20,7 @@ class NavigationDrawerFragmentPresenter @Inject constructor(
                 Content(name = "社員図鑑"),
                 Content(name = "専門用語図鑑"),
                 Content(name = "面接予約"),
-                Content(name = "Web面接"),
-                Content(name = "コミュニティ")
+                Content(name = "Web面接")
         )
     }
 

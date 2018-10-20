@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import com.mybossseasonfinal.justthejob.CompanyRegistrationActivity.QrCodeReaderActivity
 import com.mybossseasonfinal.justthejob.DI.Component.DaggerActivityComponent
 import com.mybossseasonfinal.justthejob.DI.Module.ActivityModule
@@ -76,7 +75,7 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
 
     override fun onResume() {
         super.onResume()
-        Toast.makeText(this, "現在表示中企業のCompanyID：$companyId", Toast.LENGTH_LONG).show()
+//        Toast.makeText(this, "現在表示中企業のCompanyID：$companyId", Toast.LENGTH_LONG).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

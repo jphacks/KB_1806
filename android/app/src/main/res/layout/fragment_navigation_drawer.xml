@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/background"
     tools:context=".MainActivity.NavigationDrawerFragment.NavigationDrawerFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -18,27 +20,45 @@
         <ImageView
             android:id="@+id/imageView_companyLogo"
             android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:src="@mipmap/ic_launcher_round" />
 
         <TextView
             android:id="@+id/textView_companyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:gravity="center"
             android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            android:layout_gravity="center_vertical"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView_companyLogo"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="TextView" />
 
         <Button
             android:id="@+id/button_01"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
-            android:text="企業\n変更" />
-    </LinearLayout>
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/change_company"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
 
     <ScrollView
@@ -56,6 +76,14 @@
                 android:id="@+id/contents_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:text="コミュニティ" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/comunity_list"

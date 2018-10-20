@@ -38,6 +38,8 @@ class WorkerIllustrationAdapter(
         holder.let {
             Glide.with(it.imageViewWorkerPhoto.context).load(workers[position].img_path).into(it.imageViewWorkerPhoto)
             it.textViewWorkerName.text = workers[position].name
+            it.textViewWorkerDepartment.text = workers[position].position
+            it.textViewYear.text = "入社${workers[position].working_length}年目"
         }
     }
 
@@ -60,6 +62,8 @@ class WorkerIllustrationAdapter(
 
         var imageViewWorkerPhoto = itemView.findViewById<ImageView>(R.id.imageView_worker_photo)
         var textViewWorkerName = itemView.findViewById<TextView>(R.id.textView_workerName)
+        var textViewWorkerDepartment = itemView.findViewById<TextView>(R.id.textView_worker_position)
+        var textViewYear = itemView.findViewById<TextView>(R.id.textView_entry_year)
 
         init {
             //layoutの初期設定
