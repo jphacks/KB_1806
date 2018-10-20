@@ -10,11 +10,19 @@
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/textView_room_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Web面接会場"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="55dp" />
+        android:layout_width="252dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Web面接会場 待機場所"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        app:layout_constraintBottom_toTopOf="@+id/doorImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/doorImageView"
