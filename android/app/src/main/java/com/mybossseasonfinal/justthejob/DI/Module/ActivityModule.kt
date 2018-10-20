@@ -2,6 +2,7 @@ package com.mybossseasonfinal.justthejob.DI.Module
 
 import com.mybossseasonfinal.justthejob.CompanyRegistrationActivity.CompanyRegistrationContract
 import com.mybossseasonfinal.justthejob.MainActivity.MainContract
+import com.mybossseasonfinal.justthejob.MatchingByEntrySheetCompleteActivity.MatchingByEntrySheetCompleteContract
 import com.mybossseasonfinal.justthejob.MatchingRequestCompleteActivity.MatchingRequestCompleteContract
 import com.mybossseasonfinal.justthejob.PerActivity
 import com.mybossseasonfinal.justthejob.WorkerDetailInfomationActivity.WorkerInfomationDetailContract
@@ -14,6 +15,7 @@ class ActivityModule {
     private lateinit var companyRegistrationView: CompanyRegistrationContract.View
     private lateinit var workerInfomationDetailView: WorkerInfomationDetailContract.View
     private lateinit var matchingRequestCompleteView: MatchingRequestCompleteContract.View
+    private lateinit var matchingByEntrySheetCompleteView: MatchingByEntrySheetCompleteContract.View
 
     constructor(mainView: MainContract.View) {
         this.mainView = mainView
@@ -53,5 +55,15 @@ class ActivityModule {
     @Provides
     fun provideMatchingRequestCompleteView(): MatchingRequestCompleteContract.View {
         return matchingRequestCompleteView
+    }
+
+    constructor(matchingByEntrySheetCompleteView: MatchingByEntrySheetCompleteContract.View) {
+        this.matchingByEntrySheetCompleteView = matchingByEntrySheetCompleteView
+    }
+
+    @PerActivity
+    @Provides
+    fun provideMatchingByEntrySheetCompleteView(): MatchingByEntrySheetCompleteContract.View {
+        return matchingByEntrySheetCompleteView
     }
 }

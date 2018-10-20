@@ -1,9 +1,6 @@
 package com.mybossseasonfinal.justthejob.Services
 
-import com.mybossseasonfinal.justthejob.Models.Company
-import com.mybossseasonfinal.justthejob.Models.User
-import com.mybossseasonfinal.justthejob.Models.UsersCompany
-import com.mybossseasonfinal.justthejob.Models.Worker
+import com.mybossseasonfinal.justthejob.Models.*
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
@@ -15,8 +12,9 @@ interface ApiService {
     fun getUsers(): Single<List<User>>
 
     //POSTリクエスト
-    @POST("1cuu41x1")
-    fun post(@Body user: User): Completable
+    @FormUrlEncoded
+    @POST("/users/personality")
+    fun postEntrySheet(@Field("user_id") userId: Int, @Field("content") content: String): Completable
 
     // 指定IDの企業情報を取得
     @GET("/company/{company_id}")
@@ -37,4 +35,8 @@ interface ApiService {
     //社員情報を取得
     @GET("/company/{companyId}/employees/{workerId}")
     fun getWorker(@Path("companyId") companyId: Int, @Path("workerId") workerId: Int): Single<Worker>
+
+    //社員情報を取得
+    @GET("/users/{userId}/matching/{companyId}")
+    fun getBestMatchWorker(@Path("companyId") companyId: Int, @Path("userId") workerId: Int): Single<MatchingWorker>
 }
