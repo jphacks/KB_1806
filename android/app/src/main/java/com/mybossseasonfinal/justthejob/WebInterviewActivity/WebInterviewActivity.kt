@@ -53,7 +53,7 @@ class WebInterviewActivity : AppCompatActivity() {
         options.key = BuildConfig.SKYWAY_API_KEY
         options.domain = BuildConfig.SKYWAY_HOST
         // ！！！ここで自分のPeerIDを指定！！！
-        _peer = Peer(this, "user2", options)
+        _peer = Peer(this, "user1", options)
         Navigator.initialize(_peer)
 
         // p2p通信 開始
@@ -109,7 +109,7 @@ class WebInterviewActivity : AppCompatActivity() {
         btnAction.setOnClickListener {
             if (!_bConnected) {
                 // ！！！ここで通話相手を指定！！！
-                onPeerSelected("user1")
+                onPeerSelected("user2")
             } else {
                 // 切断処理
                 closeRemoteStream()
@@ -180,9 +180,9 @@ class WebInterviewActivity : AppCompatActivity() {
             val btnAction = findViewById<View>(R.id.btnAction) as Button
             if (null != btnAction) {
                 if (false == _bConnected) {
-                    btnAction.text = "Make Call"
+                    btnAction.text = "通話開始"
                 } else {
-                    btnAction.text = "Hang up"
+                    btnAction.text = "通話終了"
                 }
             }
         }
