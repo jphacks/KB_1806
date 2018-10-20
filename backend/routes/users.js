@@ -139,8 +139,8 @@ function postUserCompany(user_id, company_id, res){
         // コレクションの取得
         collection = db.collection('users_company');
         collection.insertOne({
-            'user_id': user_id,
-            'company_id': company_id
+            'user_id': Number(user_id),
+            'company_id': Number(company_id)
 
         }, (error, result) => {
             client.close();
