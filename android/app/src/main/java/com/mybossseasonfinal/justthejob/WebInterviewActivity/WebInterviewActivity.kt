@@ -180,9 +180,9 @@ class WebInterviewActivity : AppCompatActivity() {
             val btnAction = findViewById<View>(R.id.btnAction) as Button
             if (null != btnAction) {
                 if (false == _bConnected) {
-                    btnAction.text = "Make Call"
+                    btnAction.text = "通話開始"
                 } else {
-                    btnAction.text = "Hang up"
+                    btnAction.text = "通話終了"
                 }
             }
         }
