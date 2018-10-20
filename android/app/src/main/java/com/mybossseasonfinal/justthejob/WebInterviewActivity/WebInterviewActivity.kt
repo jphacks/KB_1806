@@ -53,7 +53,7 @@ class WebInterviewActivity : AppCompatActivity() {
         options.key = BuildConfig.SKYWAY_API_KEY
         options.domain = BuildConfig.SKYWAY_HOST
         // ！！！ここで自分のPeerIDを指定！！！
-        _peer = Peer(this, options)
+        _peer = Peer(this, "user2", options)
         Navigator.initialize(_peer)
 
         // p2p通信 開始
@@ -109,7 +109,7 @@ class WebInterviewActivity : AppCompatActivity() {
         btnAction.setOnClickListener {
             if (!_bConnected) {
                 // ！！！ここで通話相手を指定！！！
-                onPeerSelected("EKzqBiZZB7NAW559")
+                onPeerSelected("user1")
             } else {
                 // 切断処理
                 closeRemoteStream()
