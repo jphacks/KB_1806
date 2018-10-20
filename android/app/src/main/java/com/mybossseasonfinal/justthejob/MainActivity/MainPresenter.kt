@@ -9,8 +9,9 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class MainPresenter @Inject constructor(private var apiService: ApiService, private var view: MainContract.View) {
-    fun apiRequest() {
+class MainPresenter @Inject constructor(private var apiService: ApiService, private var view: MainContract.View) : MainContract.Presenter {
+
+    override fun apiRequest() {
         apiService.getUsers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -26,7 +27,7 @@ class MainPresenter @Inject constructor(private var apiService: ApiService, priv
                 })
     }
 
-    fun apiPost() {
+    override fun apiPost() {
         val user = User(1316170150, "ytakaya", 25, "Test", "2018/05/30", "2018/05/30")
 
         apiService.post(user)

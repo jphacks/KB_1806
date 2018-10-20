@@ -17,18 +17,27 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "SKYWAY_API_KEY", "\"${project.property("skywayApiKey")}\""
+            buildConfigField "String", "SKYWAY_HOST", "\"${project.property("skywayHost")}\""
+            buildConfigField "String", "API_URL", "\"${project.property("apiUrl")}\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "SKYWAY_API_KEY", "\"${project.property("skywayApiKey")}\""
+            buildConfigField "String", "SKYWAY_HOST", "\"${project.property("skywayHost")}\""
         }
     }
 }
 
 dependencies {
+    implementation(name: 'SkyWay', ext: 'aar')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:support-v4:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -55,5 +64,19 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:2.13"
     kaptTest "com.google.dagger:dagger-compiler:2.13"
 
+    //zxing-android-embedded (QRcode reader)
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+
+    // Glide：画像読み込みライブラリ
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
+
+
     implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
 }
