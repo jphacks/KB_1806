@@ -23,14 +23,14 @@
 
             <ImageView
                 android:id="@+id/imageView_worker_photo"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 tools:srcCompat="@drawable/matching_toka" />
 
             <TextView
                 android:id="@+id/textView_workerName"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -38,15 +38,17 @@
 
             <TextView
                 android:id="@+id/textView_worker_position"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:text="TextView" />
 
             <TextView
                 android:id="@+id/textView_entry_year"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:text="TextView" />
         </LinearLayout>
