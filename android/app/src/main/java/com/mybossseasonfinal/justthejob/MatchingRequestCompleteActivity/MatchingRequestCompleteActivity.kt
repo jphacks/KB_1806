@@ -48,8 +48,6 @@ class MatchingRequestCompleteActivity : AppCompatActivity(), MatchingRequestComp
         Glide.with(this).load(img).into(imageView)
         textViewCompleteMessage.text = "${name}さんに\n交流申請しました！！！"
 
-//        matchingRequestCompletePresenter.getWorker(companyId, workerId)
-
         val buttonBackWorkerIllustration = findViewById<Button>(R.id.button_back)
         buttonBackWorkerIllustration.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
