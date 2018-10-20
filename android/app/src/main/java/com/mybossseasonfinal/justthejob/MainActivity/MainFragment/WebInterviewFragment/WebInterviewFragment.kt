@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import com.mybossseasonfinal.justthejob.R
 import com.mybossseasonfinal.justthejob.WebInterviewActivity.WebInterviewActivity
@@ -30,6 +31,9 @@ class WebInterviewFragment : Fragment() {
         val textViewRoomName = view.findViewById<TextView>(R.id.textView_room_name)
         val editTextInterviewId = view.findViewById<EditText>(R.id.editText_interview_id)
         val buttonEnterInterview = view.findViewById<Button>(R.id.button_enter_interview)
+        val doorImageView = view.findViewById<ImageView>(R.id.doorImageView)
+
+        doorImageView.setImageResource(R.drawable.web_interview_wait_door)
 
         buttonEnterInterview.setOnClickListener {
             val intent = Intent(activity, WebInterviewActivity::class.java)
