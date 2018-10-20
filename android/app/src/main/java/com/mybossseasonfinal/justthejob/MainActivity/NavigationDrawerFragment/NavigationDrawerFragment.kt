@@ -133,11 +133,6 @@ class NavigationDrawerFragment : Fragment(),
                     fragmentTransaction.replace(R.id.mainFragmentContainer, WebInterviewFragment.createInstance())
                     fragmentTransaction.commit()
                 }
-                "コミュニティ" -> {
-//                    fragmentTransaction.addToBackStack(null)
-//                    fragmentTransaction.replace(R.id.mainFragmentContainer, ComunityFragment.createInstance())
-//                    fragmentTransaction.commit()
-                }
             }
         }
         val drawer = activity?.findViewById<DrawerLayout>(R.id.drawerLayout)
