@@ -35,8 +35,9 @@
             android:parentActivityName=".CompanyRegistrationActivity.CompanyRegistrationActivity" />
         <activity android:name=".VideoChatActivity.VideoChatActivity" />
         <activity android:name=".CompanyRegistrationActivity.CompanyRegistrationActivity" />
+        <activity android:name=".WebInterviewActivity.WebInterviewActivity" />
         <activity android:name=".WorkerDetailInfomationActivity.WorkerInfomationDetailActivity" />
-        <activity android:name=".MatchingRequestCompleteActivity.MatchingRequestCompleteActivity"></activity>
+        <activity android:name=".MatchingRequestCompleteActivity.MatchingRequestCompleteActivity" />
     </application>
 
 </manifest>
