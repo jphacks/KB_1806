@@ -34,7 +34,9 @@
             android:name=".CompanyRegistrationActivity.QrCodeReaderActivity"
             android:parentActivityName=".CompanyRegistrationActivity.CompanyRegistrationActivity" />
         <activity android:name=".VideoChatActivity.VideoChatActivity" />
-        <activity android:name=".CompanyRegistrationActivity.CompanyRegistrationActivity"></activity>
+        <activity android:name=".CompanyRegistrationActivity.CompanyRegistrationActivity" />
+        <activity android:name=".WorkerDetailInfomationActivity.WorkerInfomationDetailActivity" />
+        <activity android:name=".MatchingRequestCompleteActivity.MatchingRequestCompleteActivity"></activity>
     </application>
 
 </manifest>
