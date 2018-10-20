@@ -64,6 +64,7 @@ class EntrySheetFragment : Fragment(), EntrySheetContract.View {
             val intent = Intent(activity, MatchingByEntrySheetCompleteActivity::class.java)
             intent.putExtra("content", content)
             intent.putExtra("userId", userId)
+            intent.putExtra("companyId", args!!.getInt("CompanyId"))
             startActivity(intent)
         }
     }
