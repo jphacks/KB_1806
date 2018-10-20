@@ -3,7 +3,14 @@ var router = express.Router();
 var MongoClient = require("mongodb").MongoClient;
 var assert = require('assert')
 var url_db = 'mongodb://localhost:27017/company'
-
+var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
+//watson personalityInsights Authentication
+var personalityInsights = new PersonalityInsightsV3({
+  username: '0f304f75-c6ff-44d2-9e02-8ad625f0f14b',
+  password: 'qpuQkhIbhTsy',
+  version: '2016-10-19',
+  url: 'https://gateway.watsonplatform.net/personality-insights/api'
+});
 /**
  * @swagger
  * /company/:
@@ -277,6 +284,33 @@ router.get('/:id/employees/:emp_id', function(req, res, next) {
 
 /**
  * @swagger
+ * /company/employees/personality:
+ *   post:
+ *     summary: Watson Personality Insightsで社員の性格特性を取得
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: employee_id
+ *         in: formData
+ *         required: true
+ *         dataType: integer
+ *         description: 社員ID
+ *       - name: content
+ *         in: formData
+ *         required: true
+ *         dataType: integer
+ *         description: Personality Insightsで解析してほしいテキスト※100文字以上
+ *     responses:
+ *       200:
+ *         description: add
+ */
+//社員の性格情報を登録
+router.post('/employees/personality', function(req, res, next) {
+    postEmployeePersonality(req.body, res);
+});
+
+/**
+ * @swagger
  * /company/setEmployee:
  *   post:
  *     tags:
@@ -480,6 +514,59 @@ function getEnployeeInfo(_id, emp_id,dbName, collection, res){
         else res.send("error:id not found");
     });
   });
+};
+
+// Watsonによる性格特性の結果をデータに格納
+function postEmployeePersonality(body, res){
+  personalityInsights.profile(
+    {
+      content: body.content,
+      content_type: 'text/plain',
+      consumption_preferences: true,
+      content_language:'ja'
+    },
+    function(err, response) {
+      if (err) {
+        console.log('error:', err);
+      } else {
+        console.log(JSON.stringify(response, null, 2));
+        res.json(response);
+
+        // MongoDB へ Personality_Insightsの結果を格納
+        MongoClient.connect(url_db, (error, client) => {
+            const db = client.db('company');
+
+            // コレクションの取得
+            collection = db.collection('employees_insights');
+            collection.find({employee_id: Number(body.employee_id)}).toArray((error, documents)=>{
+                if(documents[0] != null){
+                  // 条件に合致するドキュメントをすべて更新
+                  collection.updateMany(
+                    { employee_id: Number(body.employee_id)
+                      //company_id: Number(body.company_id)
+                    },{ $set: {
+                      'personality_insights': response
+                     } },
+                    (error, result) => {
+                        client.close();
+                    });
+                }
+                else{
+                  //新規登録
+                  collection.insertOne({
+                      'employee_id': Number(body.employee_id),
+                      //'company_id': Number(body.company_id),
+                      'personality_insights': response
+
+                  }, (error, result) => {
+                      client.close();
+                  });
+                }
+            });
+        });
+      }
+    }
+  );
 };
 
 //企業情報をデータベースに登録

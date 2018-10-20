@@ -127,7 +127,27 @@ router.post('/company', function(req, res, next) {
  */
 // ユーザの性格特性の結果を返すAPI
 router.post('/personality', function(req, res, next) {
-    postUserUserPersonality(req.body, res);
+    postUserPersonality(req.body, res);
+});
+
+/**
+ * @swagger
+ * /users/personality/{user_id}:
+ *   get:
+ *     summary: Watsonによる性格特性の結果を取得
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user_id
+ *         in: path
+ *         required: true
+ *         format: int32
+ *     responses:
+ *       200:
+ */
+//Watsonによる性格特性の結果を取得
+router.get('/personality/:user_id', function(req, res, next) {
+    getUserPersonality(req.params.user_id, res);
 });
 
 // ユーザのMy企業に指定企業を保存
@@ -185,8 +205,8 @@ function getCompanyList(_id, dbName, collection, res){
     });
   });
 };
-// ユーザのMy企業に指定企業を保存
-function postUserUserPersonality(body, res){
+// Watsonによる性格特性の結果をデータに格納
+function postUserPersonality(body, res){
   personalityInsights.profile(
     {
       content: body.content,
@@ -235,5 +255,20 @@ function postUserUserPersonality(body, res){
     }
   );
 };
+//ユーザの性格特性を取得
+function getUserPersonality(_id, res){
+  // MongoDB へ 接続
+  MongoClient.connect(url_db, (error, client) => {
+    const db = client.db("users");
 
+    // コレクションの取得
+    collection = db.collection("Personality_Insights");
+
+    // コレクション中で会社IDに合致するドキュメントを取得
+    collection.find({user_id:Number(_id)}).toArray((error, documents)=>{
+        if(documents[0] != null)res.json(documents[0]);
+        else res.send("error:id not found");
+    });
+  });
+};
 module.exports = router;
