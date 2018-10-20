@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="colorDrawerHeader">#CDDC39</color>
+    <color name="background">#E0FFE9</color>
 </resources>
