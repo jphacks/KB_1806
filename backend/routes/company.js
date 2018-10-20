@@ -5,10 +5,41 @@ var assert = require('assert')
 var url_db = 'mongodb://localhost:27017/company'
 
 /**
-  * @swagger
-  * schemes:
-  *   - http
-  */
+ * @swagger
+ * /company/:
+ *   get:
+ *     tags:
+ *       - company
+ *     summary: 会社情報を一覧を取得
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: login
+ */
+  //会社情報を一覧を取得
+  router.get('/', function(req, res, next) {
+      getAllCompanyInfo(res);
+  });
+
+  /**
+   * @swagger
+   * /company/employees/:
+   *   get:
+   *     tags:
+   *       - company
+   *     summary: 登録会社すべての社員情報一覧を送信
+   *     produces:
+   *       - application/json
+   *     responses:
+   *       200:
+   *         description: login
+   */
+  //登録会社すべての社員情報一覧を送信
+  router.get('/employees/', function(req, res, next) {
+      getAllEmployeesInfo(res);
+  });
+
 /**
   * @swagger
   * /company/{company_id}:
@@ -67,6 +98,7 @@ router.get('/:id', function(req, res, next) {
     //res.send("id:" + req.params.id);
     getCompanyInfo(req.params.id,"company", "info", res);
 });
+
 
 /**
   * @swagger
@@ -150,7 +182,7 @@ router.get('/:id', function(req, res, next) {
   */
 //社員一覧を送信
 router.get('/:id/employees', function(req, res, next) {
-    getAllEmproyeeInfo(req.params.id,"company", "employees", res);
+    getAllEmployeeInfo(req.params.id,"company", "employees", res);
 });
 /**
   * @swagger
@@ -240,7 +272,7 @@ router.get('/:id/employees', function(req, res, next) {
   */
 //社員個人を送信
 router.get('/:id/employees/:emp_id', function(req, res, next) {
-    getEnproyeeInfo(req.params.id,req.params.emp_id,"company", "employees", res);
+    getEnployeeInfo(req.params.id,req.params.emp_id,"company", "employees", res);
 });
 
 /**
@@ -368,7 +400,38 @@ router.post('/setCompany', function(req, res, next) {
     postSetCompany(req.body, res);
 });
 
+//会社情報一覧
+function getAllCompanyInfo(res){
+  // MongoDB へ 接続
+  MongoClient.connect(url_db, (error, client) => {
+    const db = client.db("company");
 
+    // コレクションの取得
+    collection = db.collection("info");
+
+    // コレクション中で会社IDに合致するドキュメントを取得
+    collection.find().toArray((error, documents)=>{
+        if(documents[0] != null)res.json(documents);
+        else res.send("error:該当データがありません");
+    });
+  });
+};
+//全会社の社員情報一覧
+function getAllEmployeesInfo(res){
+  // MongoDB へ 接続
+  MongoClient.connect(url_db, (error, client) => {
+    const db = client.db("company");
+
+    // コレクションの取得
+    collection = db.collection("employees");
+
+    // コレクション中で会社IDに合致するドキュメントを取得
+    collection.find().toArray((error, documents)=>{
+        if(documents[0] != null)res.json(documents);
+        else res.send("error:該当データがありません");
+    });
+  });
+};
 //会社情報取得
 function getCompanyInfo(_id, dbName, collection, res){
   // MongoDB へ 接続
@@ -386,7 +449,7 @@ function getCompanyInfo(_id, dbName, collection, res){
   });
 };
 //全社員情報取得
-function getAllEmproyeeInfo(_id,dbName, collection, res){
+function getAllEmployeeInfo(_id,dbName, collection, res){
   // MongoDB へ 接続
   MongoClient.connect(url_db, (error, client) => {
     const db = client.db(dbName);
@@ -403,7 +466,7 @@ function getAllEmproyeeInfo(_id,dbName, collection, res){
 };
 
 //社員個人情報取得
-function getEnproyeeInfo(_id, emp_id,dbName, collection, res){
+function getEnployeeInfo(_id, emp_id,dbName, collection, res){
   // MongoDB へ 接続
   MongoClient.connect(url_db, (error, client) => {
     const db = client.db(dbName);
