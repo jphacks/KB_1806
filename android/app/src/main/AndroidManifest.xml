@@ -35,6 +35,7 @@
             android:parentActivityName=".CompanyRegistrationActivity.CompanyRegistrationActivity" />
         <activity android:name=".VideoChatActivity.VideoChatActivity" />
         <activity android:name=".CompanyRegistrationActivity.CompanyRegistrationActivity"></activity>
+        <activity android:name=".WebInterviewActivity.WebInterviewActivity"></activity>
     </application>
 
 </manifest>
