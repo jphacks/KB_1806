@@ -23,9 +23,10 @@
 
             <ImageView
                 android:id="@+id/imageView_worker_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_margin="20dp"
+                android:scaleType="center"
                 tools:srcCompat="@drawable/matching_toka" />
 
             <TextView
