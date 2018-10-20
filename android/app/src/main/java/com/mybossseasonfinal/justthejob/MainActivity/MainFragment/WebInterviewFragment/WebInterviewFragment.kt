@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.mybossseasonfinal.justthejob.R
+import com.mybossseasonfinal.justthejob.WebInterviewActivity.WebInterviewActivity
 
 class WebInterviewFragment : Fragment() {
 
