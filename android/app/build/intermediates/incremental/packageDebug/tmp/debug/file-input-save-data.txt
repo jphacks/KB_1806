@@ -1,0 +1,35 @@
+#Internal package file, do not edit.
+#Sun Oct 21 09:30:52 JST 2018
+7.path=lib/x86_64/libskyway.so
+2.base=/Users/Y_h/Desktop/KB_1806/android/app/build/intermediates/transforms/mergeJniLibs/debug/0
+5.set=DEX
+0.path=lib/x86/libskyway.so
+2.baseType=DIRECTORY
+3.base=/Users/Y_h/Desktop/KB_1806/android/app/build/intermediates/transforms/dexMerger/debug/1
+7.baseType=DIRECTORY
+2.set=NATIVE_RESOURCE
+1.path=lib/armeabi-v7a/libskyway.so
+4.base=/Users/Y_h/Desktop/KB_1806/android/app/build/intermediates/transforms/dexMerger/debug/0
+7.set=NATIVE_RESOURCE
+count=8
+5.baseType=DIRECTORY
+2.path=lib/arm64-v8a/libskyway.so
+5.base=/Users/Y_h/Desktop/KB_1806/android/app/build/intermediates/transforms/dexMerger/debug/3
+4.set=DEX
+3.path=classes.dex
+6.base=/Users/Y_h/Desktop/KB_1806/android/app/build/intermediates/transforms/dexMerger/debug/3
+3.baseType=DIRECTORY
+1.set=NATIVE_RESOURCE
+4.path=classes.dex
+7.base=/Users/Y_h/Desktop/KB_1806/android/app/build/intermediates/transforms/mergeJniLibs/debug/0
+6.set=DEX
+1.baseType=DIRECTORY
+6.baseType=DIRECTORY
+5.path=classes.dex
+0.base=/Users/Y_h/Desktop/KB_1806/android/app/build/intermediates/transforms/mergeJniLibs/debug/0
+0.baseType=DIRECTORY
+3.set=DEX
+6.path=classes2.dex
+1.base=/Users/Y_h/Desktop/KB_1806/android/app/build/intermediates/transforms/mergeJniLibs/debug/0
+4.baseType=DIRECTORY
+0.set=NATIVE_RESOURCE
