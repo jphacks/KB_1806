@@ -1,6 +1,7 @@
 package com.mybossseasonfinal.justthejob.DI.Module
 
 import com.mybossseasonfinal.justthejob.MainActivity.CompanyListFragment.CompanyListFragmentContract
+import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.EntrySheetFragment.EntrySheetContract
 import com.mybossseasonfinal.justthejob.MainActivity.MainFragment.WorkerIllustrationFragment.WorkerIllustrationFragmentContract
 import com.mybossseasonfinal.justthejob.MainActivity.NavigationDrawerFragment.NavigationDrawerFragmentContract
 import com.mybossseasonfinal.justthejob.PerFragment
@@ -12,6 +13,7 @@ class FragmentModule {
     private lateinit var navigationDrawerFragmentView: NavigationDrawerFragmentContract.View
     private lateinit var companyListFragmentView: CompanyListFragmentContract.View
     private lateinit var workerIllustrationFragmentView: WorkerIllustrationFragmentContract.View
+    private lateinit var entrySheetFragmentView: EntrySheetContract.View
 
     constructor(navigationDrawerFragmentView: NavigationDrawerFragmentContract.View) {
         this.navigationDrawerFragmentView = navigationDrawerFragmentView
@@ -23,6 +25,10 @@ class FragmentModule {
 
     constructor(workerIllustrationFragmentView: WorkerIllustrationFragmentContract.View) {
         this.workerIllustrationFragmentView = workerIllustrationFragmentView
+    }
+
+    constructor(entrySheetFragmentView: EntrySheetContract.View) {
+        this.entrySheetFragmentView = entrySheetFragmentView
     }
 
     @PerFragment
@@ -41,5 +47,11 @@ class FragmentModule {
     @Provides
     fun provideWorkerIllustrationFragmentView(): WorkerIllustrationFragmentContract.View {
         return workerIllustrationFragmentView
+    }
+
+    @PerFragment
+    @Provides
+    fun provideEntrySheetFragmentView(): EntrySheetContract.View {
+        return entrySheetFragmentView
     }
 }

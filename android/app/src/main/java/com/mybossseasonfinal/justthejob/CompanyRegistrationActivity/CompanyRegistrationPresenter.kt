@@ -37,7 +37,7 @@ class CompanyRegistrationPresenter @Inject constructor(private var apiService: A
      * 企業情報を追加するPostリクエスト
      */
     override fun postUsersCompany(userId: Int, companyId: Int) {
-        val usersCompany: UsersCompany = UsersCompany(100, companyId)
+        val usersCompany: UsersCompany = UsersCompany(1, companyId)
         apiService.postUsersCompany(usersCompany)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

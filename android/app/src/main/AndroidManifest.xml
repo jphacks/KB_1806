@@ -38,6 +38,8 @@
         <activity android:name=".WebInterviewActivity.WebInterviewActivity" />
         <activity android:name=".WorkerDetailInfomationActivity.WorkerInfomationDetailActivity" />
         <activity android:name=".MatchingRequestCompleteActivity.MatchingRequestCompleteActivity" />
+        <activity android:name=".MatchingByEntrySheetCompleteActivity.MatchingByEntrySheetCompleteActivity" />
+        <activity android:name=".BigFiveAnalyzeResultActivity.BigFiveAnalyzeResultActivity"></activity>
     </application>
 
 </manifest>
