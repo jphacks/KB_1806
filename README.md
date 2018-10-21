@@ -9,6 +9,8 @@
 
 #### ↓ 開発背景 説明動画 ↓
 
+！！ さっきの動画とは別です ！！
+
 [<img src="appLogo.png" width="100px">](https://youtu.be/l9bMw5uSiX8)
 
 #### 製品開発のきっかけ
