@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_calendar"
+        android:orderInCategory="100"
+        android:title="カレンダー"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_acceptance_company"
+        android:orderInCategory="100"
+        android:title="内定企業"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_read_qr"
+        android:orderInCategory="100"
+        android:title="QR読み取り"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="設定"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:title="ログアウト"
+        app:showAsAction="never" />
+</menu>
