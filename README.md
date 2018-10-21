@@ -9,7 +9,7 @@
 
 #### ↓ 開発背景 説明動画 ↓
 
-！！ 上の動画とは別です ！！
+！！ 冒頭の動画とは別です ！！
 
 [<img src="appLogo.png" width="100px">](https://youtu.be/l9bMw5uSiX8)
 
