@@ -7,7 +7,7 @@
 
 ### 背景（製品開発のきっかけ、課題等）
 
-↓ 開発背景 説明動画 ↓
+#### ↓ 開発背景 説明動画 ↓
 
 [<img src="appLogo.png" width="100px">](https://youtu.be/l9bMw5uSiX8)
 
