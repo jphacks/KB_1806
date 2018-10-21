@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
                 .build()
                 .inject(this)
 
-        mainPresenter.apiPost()
+//        mainPresenter.apiPost()
 
         //Toolbar
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -76,6 +76,10 @@ class MainActivity : AppCompatActivity(), MainContract.View, NavigationView.OnNa
     override fun onResume() {
         super.onResume()
 //        Toast.makeText(this, "現在表示中企業のCompanyID：$companyId", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
