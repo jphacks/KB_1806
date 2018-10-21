@@ -150,6 +150,27 @@ router.get('/personality/:user_id', function(req, res, next) {
     getUserPersonality(req.params.user_id, res);
 });
 
+/**
+ * @swagger
+ * /users/{user_id}/matching/{company_id}:
+ *   get:
+ *     summary: ユーザとマッチする社員を検索
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user_id
+ *         in: path
+ *         required: true
+ *         format: int32
+ *         description: ユーザID
+ *       - name: company_id
+ *         in: path
+ *         required: true
+ *         format: int32
+ *         description: 企業ID
+ *     responses:
+ *       200:
+ */
 // ユーザとマッチする社員を検索
 router.get('/:user_id/matching/:company_id', function(req, res, next) {
     getMatchingrEmployees(req.params.user_id, req.params.company_id, res);
@@ -223,8 +244,8 @@ function postUserPersonality(body, res){
       if (err) {
         console.log('error:', err);
       } else {
-        console.log(JSON.stringify(response, null, 2));
-        res.json(response);
+        //console.log(JSON.stringify(response, null, 2));
+        //res.json(response);
 
         // MongoDB へ Personality_Insightsの結果を格納
         MongoClient.connect(url_db, (error, client) => {
@@ -242,6 +263,8 @@ function postUserPersonality(body, res){
                      } },
                     (error, result) => {
                         client.close();
+                        console.log(JSON.stringify(response, null, 2));
+                        res.json(response);
                     });
                 }
                 else{
@@ -252,6 +275,8 @@ function postUserPersonality(body, res){
 
                   }, (error, result) => {
                       client.close();
+                      console.log(JSON.stringify(response, null, 2));
+                      res.json(response);
                   });
                 }
             });
