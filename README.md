@@ -8,8 +8,7 @@
 ### 背景（製品開発のきっかけ、課題等）
 
 - 開発背景 説明動画 → 
-[![背景説明映像](appLogo.png)](https://youtu.be/l9bMw5uSiX8)
-<img src="appLogo.png" width="100px">
+[<img src="appLogo.png" width="100px">](https://youtu.be/l9bMw5uSiX8)
 
 #### 製品開発のきっかけ
 - 今回のプロダクトの開発に至った背景
